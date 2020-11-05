@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:FoodShopApp/models/category.dart';
 import 'package:http/http.dart' as http;
 
-final String apiUrl ="http://5f96864411ab98001603ac4b.mockapi.io/Categories";
+final String apiUrl ="https://5f96864411ab98001603ac4b.mockapi.io/Categories";
 
 Future<List<Category>> getCategories() async 
 {

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 String getProductApi( String categoryId , String productId)
 {
-  return "http://5f96864411ab98001603ac4b.mockapi.io/Categories/$categoryId/Products/$productId";
+  return "https://5f96864411ab98001603ac4b.mockapi.io/Categories/$categoryId/Products/$productId";
 }
 
 

@@ -7,8 +7,7 @@ class Products
   bool hot;
   String price;
 
-  Products(
-      {this.id, this.categoryId, this.name, this.image, this.hot, this.price});
+  Products(  {this.id, this.categoryId, this.name, this.image, this.hot, this.price});
 
   Products.fromJson(Map<String, dynamic> json) 
   {

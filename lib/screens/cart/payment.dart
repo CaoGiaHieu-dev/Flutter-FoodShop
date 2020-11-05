@@ -72,9 +72,8 @@ class _Payment extends State<Payment>
                             style: TextStyle
                             (
                               color: HexColor("##F9DC5C"),
-                              fontSize: 25
+                              fontSize: 25,
                             ),
-                            
                           ),
                         ),
                       )
