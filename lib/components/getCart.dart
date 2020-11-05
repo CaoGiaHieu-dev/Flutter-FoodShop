@@ -18,7 +18,6 @@ addtoCart(dynamic _tempList)
 int countlistCart()
 {
   return _cartList.length;
-  //_cartList.length;
 }
 
 
@@ -55,4 +54,14 @@ removefromcart( int id )
       break;
     }
   }
+}
+
+double getTotalPrice()
+{
+  double total = 0;
+  for(int i = 0 ; i< cartList.length ; i++)
+  {
+    total += double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id));
+  } 
+  return total;
 }

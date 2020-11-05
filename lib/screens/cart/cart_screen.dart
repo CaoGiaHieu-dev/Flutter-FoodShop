@@ -10,14 +10,12 @@ import 'listcart.dart';
 
 class CartScreen extends StatefulWidget
 {
-
   @override
   _CartScreen createState() => _CartScreen();
 }
 
 class _CartScreen extends State<CartScreen>
 {
-
   @override
   Widget build(BuildContext context)
   {
@@ -68,6 +66,13 @@ class _CartScreen extends State<CartScreen>
                 ),
                 ListCart
                 (
+                  updateTotalPrice: () =>
+                  {
+                    setState(() 
+                    {
+                      
+                    })
+                  },
                   size: size,
                 ),
                 Payment

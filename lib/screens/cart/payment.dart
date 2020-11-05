@@ -1,4 +1,5 @@
 import 'package:FoodShopApp/components/constants.dart';
+import 'package:FoodShopApp/components/getCart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -64,7 +65,6 @@ class _Payment extends State<Payment>
                         ),
                         child: Align
                         (
-                        
                           alignment: Alignment.center,  
                           child: Text
                           (
@@ -74,7 +74,7 @@ class _Payment extends State<Payment>
                               color: HexColor("##F9DC5C"),
                               fontSize: 25
                             ),
-
+                            
                           ),
                         ),
                       )
@@ -118,7 +118,7 @@ class _Payment extends State<Payment>
                 alignment: Alignment.center,
                 child : Text
                 (
-                  "Total : number",
+                  "Total : " + getTotalPrice().toString(),
                   style: TextStyle
                   (
                     color: HexColor("##F9DC5C"),

@@ -7,21 +7,24 @@ import 'package:flutter/material.dart';
 class ListCart extends StatefulWidget
 {
   final Size size;
+  final Function updateTotalPrice;
   ListCart
   (
     {
       Key key,
-      this.size
+      this.size,
+      this.updateTotalPrice
     }
   ) : super (key : key );
   @override
-  _ListCart createState() => _ListCart(size);
+  _ListCart createState() => _ListCart(size,updateTotalPrice);
 }
 
 class _ListCart extends State<ListCart>
 {
   Size size;
-  _ListCart(this.size);
+  Function updateTotalPrice;
+  _ListCart(this.size,this.updateTotalPrice);
   
   List<Products> temp = cartList;   
 
@@ -40,59 +43,91 @@ class _ListCart extends State<ListCart>
         children: <Widget>
         [
           for ( int i = 0 ; i < cartList.length ; i ++)
-            //if( cartList.where((element) => element.id == cartList[i].id).length == 1 ||  )  
-            Card
-            (
-              shape: BeveledRectangleBorder
+            if( getItemInCart(int.parse(cartList[i].id)) >0  )  
+              Card
               (
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              color: kMainColor,
-              child: Row
-              (
-                children: <Widget>
-                [
-                  Image.network
-                  (
-                    cartList[i].image,
-                    height: 120 ,
-                    width: 100,
-                  ),
-                  Spacer(),
-                  Align
-                  (
-                    alignment: Alignment.centerRight,
-                    child: Container
+                shape: BeveledRectangleBorder
+                (
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                color: kMainColor,
+                child: Row
+                (
+                  children: <Widget>
+                  [
+                    Image.network
                     (
-                      padding: EdgeInsets.only
+                      cartList[i].image,
+                      height: 120 ,
+                      width: 100,
+                    ),
+                    Spacer(),
+                    Align
+                    (
+                      alignment: Alignment.center,
+                      child: Text
                       (
-                        left: 10,
-                        right: 10
+                        ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
+                        style: TextStyle
+                        (
+                          color: Colors.white
+                        ),
                       ),
-                      child: Row
+                    ),
+                    Spacer(),
+                    Align
+                    (
+                      alignment: Alignment.centerRight,
+                      child: Container
                       (
-                        children: <Widget>
-                        [
-                          SizedBox
-                          (
-                            width: size.width *0.1,
-                            child: RaisedButton
+                        padding: EdgeInsets.only
+                        (
+                          left: 10,
+                          right: 10
+                        ),
+                        child: Row
+                        (
+                          children: <Widget>
+                          [
+                            SizedBox
                             (
-                              color: kButtonColor,
-                              shape: RoundedRectangleBorder
+                              width: size.width *0.1,
+                              child: RaisedButton
                               (
-                                borderRadius: BorderRadius.circular(100)
-                              ),
-                              onPressed: () 
-                              {
-                                setState(() =>
+                                color: kButtonColor,
+                                shape: RoundedRectangleBorder
+                                (
+                                  borderRadius: BorderRadius.circular(100)
+                                ),
+                                onPressed: () 
                                 {
-                                  addtoCart(cartList[i])
-                                });
-                              },
+                                  setState(() =>
+                                  {
+                                    addtoCart(cartList[i]),
+                                    updateTotalPrice()
+                                  });
+                                },
+                                child: Text
+                                (
+                                  "+",
+                                  style: TextStyle
+                                  (
+                                    color: Colors.white,
+                                    fontSize: 25
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container
+                            (
+                              padding: EdgeInsets.only
+                              (
+                                left: 10,
+                                right: 10
+                              ),
                               child: Text
                               (
-                                "+",
+                                getItemInCart(int.parse(cartList[i].id)).toString(),
                                 style: TextStyle
                                 (
                                   color: Colors.white,
@@ -100,59 +135,42 @@ class _ListCart extends State<ListCart>
                                 ),
                               ),
                             ),
-                          ),
-                          Container
-                          (
-                            padding: EdgeInsets.only
+                            SizedBox
                             (
-                              left: 10,
-                              right: 10
-                            ),
-                            child: Text
-                            (
-                              getItemInCart(int.parse(cartList[i].id)).toString(),
-                              style: TextStyle
+                              width: size.width *0.1,
+                              child: RaisedButton
                               (
-                                color: Colors.white,
-                                fontSize: 25
-                              ),
-                            ),
-                          ),
-                          SizedBox
-                          (
-                            width: size.width *0.1,
-                            child: RaisedButton
-                            (
-                              color: kButtonColor,
-                              shape: RoundedRectangleBorder
-                              (
-                                borderRadius: BorderRadius.circular(100)
-                              ),
-                              onPressed: () 
-                              { 
-                                setState(() =>
-                                {
-                                  removefromcart(int.parse(cartList[i].id)),
-                                });
-                              },
-                              child: Text
-                              (
-                                "-",
-                                style: TextStyle
+                                color: kButtonColor,
+                                shape: RoundedRectangleBorder
                                 (
-                                  color: Colors.white,
-                                  fontSize: 25
+                                  borderRadius: BorderRadius.circular(100)
+                                ),
+                                onPressed: () 
+                                { 
+                                  setState(() =>
+                                  {
+                                    removefromcart(int.parse(cartList[i].id)),
+                                    updateTotalPrice()
+                                  });
+                                },
+                                child: Text
+                                (
+                                  "-",
+                                  style: TextStyle
+                                  (
+                                    color: Colors.white,
+                                    fontSize: 25
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ]
-                      ),
+                          ]
+                        ),
+                      )
                     )
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
         ],
       )
     );

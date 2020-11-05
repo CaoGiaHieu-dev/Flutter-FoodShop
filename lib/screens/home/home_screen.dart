@@ -48,10 +48,11 @@ class _HomeSceen extends State<HomeScreen>
   // #region StateFAB
   Widget fab = FloatingActionButton.extended
   (
+    //key: UniqueKey(),
     backgroundColor: kMainColor,
     onPressed: () => 
     {
-     
+      
     },
     label: Align
     (
@@ -75,23 +76,9 @@ class _HomeSceen extends State<HomeScreen>
       fab = FloatingActionButton.extended
       (
         backgroundColor: kMainColor,
-        key: UniqueKey(),
+        //key: UniqueKey(),
         onPressed: () => 
         {
-          // Navigator.push
-          // ( 
-          //   context,
-          //   MaterialPageRoute
-          //   (
-          //     builder: (context) => new CartScreen(),
-          //   )
-          // ).then
-          // (
-          //   (value) => setState()
-          //   {
-          //     
-          //   }
-          // )
           Navigator.push
           ( 
             context, MaterialPageRoute
@@ -101,10 +88,9 @@ class _HomeSceen extends State<HomeScreen>
           ).then
           (
             (value) => setState
-            (
-              () 
+            ( () =>
               {
-                
+                _fabChange()
               }
             )
           )
