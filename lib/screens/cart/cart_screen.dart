@@ -1,7 +1,7 @@
 
 
-import 'package:FoodShopApp/components/constants.dart';
-import 'package:FoodShopApp/screens/cart/payment.dart';
+import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/screens/cart/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

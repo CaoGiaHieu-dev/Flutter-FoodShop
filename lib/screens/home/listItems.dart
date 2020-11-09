@@ -1,5 +1,5 @@
-import 'package:FoodShopApp/models/products.dart';
-import 'package:FoodShopApp/screens/home/carditem.dart';
+import 'package:foodshop/models/products.dart';
+import 'package:foodshop/screens/home/carditem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

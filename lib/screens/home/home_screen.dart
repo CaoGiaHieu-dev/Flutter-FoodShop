@@ -1,15 +1,15 @@
 
-import 'package:FoodShopApp/components/constants.dart';
-import 'package:FoodShopApp/components/Categories.dart';
-import 'package:FoodShopApp/components/Products.dart';
-import 'package:FoodShopApp/components/Cart.dart';
-import 'package:FoodShopApp/models/category.dart';
-import 'package:FoodShopApp/models/products.dart';
-import 'package:FoodShopApp/screens/cart/cart_screen.dart';
-import 'package:FoodShopApp/screens/home/components/getupdateProducts.dart';
-import 'package:FoodShopApp/screens/home/listItems.dart';
-import 'package:FoodShopApp/screens/home/swipeList.dart';
-import 'package:FoodShopApp/screens/home/titleItems.dart';
+import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/components/Categories.dart';
+import 'package:foodshop/components/Products.dart';
+import 'package:foodshop/components/Cart.dart';
+import 'package:foodshop/models/category.dart';
+import 'package:foodshop/models/products.dart';
+import 'package:foodshop/screens/cart/cart_screen.dart';
+import 'package:foodshop/screens/home/components/getupdateProducts.dart';
+import 'package:foodshop/screens/home/listItems.dart';
+import 'package:foodshop/screens/home/swipeList.dart';
+import 'package:foodshop/screens/home/titleItems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';

@@ -1,4 +1,4 @@
-import 'package:FoodShopApp/models/products.dart';
+import 'package:foodshop/models/products.dart';
 import 'package:flutter/cupertino.dart';
 
 class UpdateListItems extends InheritedWidget

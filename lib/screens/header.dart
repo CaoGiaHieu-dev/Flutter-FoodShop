@@ -1,4 +1,4 @@
-import 'package:FoodShopApp/components/constants.dart';
+import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';

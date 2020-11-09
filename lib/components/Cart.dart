@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:core';
 
 
-import 'package:FoodShopApp/models/cart.dart';
-import 'package:FoodShopApp/models/products.dart';
+import 'package:foodshop/models/cart.dart';
+import 'package:foodshop/models/products.dart';
 import 'package:http/http.dart' as http;
 
 List<Products> _cartList = List<Products>();

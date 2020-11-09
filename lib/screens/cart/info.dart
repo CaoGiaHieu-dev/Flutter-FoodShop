@@ -1,4 +1,4 @@
-import 'package:FoodShopApp/components/constants.dart';
+import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,8 +41,6 @@ class _Info extends State<Info>
   void initState()
   {
     super.initState();
-
-    
   }
   // #endregion
 

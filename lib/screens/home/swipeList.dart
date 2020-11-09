@@ -1,7 +1,7 @@
 
-import 'package:FoodShopApp/components/constants.dart';
-import 'package:FoodShopApp/models/category.dart';
-import 'package:FoodShopApp/models/products.dart';
+import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/models/category.dart';
+import 'package:foodshop/models/products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:FoodShopApp/models/category.dart';
-import 'package:FoodShopApp/screens/detail/detail_screen.dart';
+import 'package:foodshop/models/category.dart';
+import 'package:foodshop/screens/detail/detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';

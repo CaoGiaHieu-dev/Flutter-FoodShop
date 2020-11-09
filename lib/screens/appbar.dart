@@ -1,4 +1,4 @@
-import 'package:FoodShopApp/components/constants.dart';
+import 'package:foodshop/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
