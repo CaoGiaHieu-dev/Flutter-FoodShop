@@ -32,8 +32,7 @@ dependencies:
   hexcolor: ^1.0.6
   flutter_search_bar: ^2.1.0
   http: ^0.12.2
-  google_maps_flutter: ^0.5.27+3
-  permission: ^0.1.7
+  google_maps_flutter: ^1.0.6
 
 dev_dependencies:
   flutter_test:
