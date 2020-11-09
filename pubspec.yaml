@@ -33,6 +33,9 @@ dependencies:
   flutter_search_bar: ^2.1.0
   http: ^0.12.2
   google_maps_flutter: ^1.0.6
+  geolocator: ^6.1.4
+  geocoder: ^0.2.1
+
 
 dev_dependencies:
   flutter_test:

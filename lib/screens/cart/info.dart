@@ -30,13 +30,14 @@ class _Info extends State<Info>
 
   final LatLng _center = const LatLng(10.762622, 106.660172);
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) 
+  {
     _controller = controller;
   }
   // #endregion
 
   // #region State
-  String _userId="";
+  String _address="";
   String _phoneNumber="";
   void initState()
   {
@@ -53,12 +54,21 @@ class _Info extends State<Info>
       [
         RaisedButton
         (
+          onPressed: ()
+          {
+
+          },
+          child: Icon(Icons.payments),
+        ),
+        RaisedButton
+        (
           onPressed: () 
           {
             Navigator.pop(context);
           },
           child: Icon(Icons.close),
-        )
+        ),
+        
       ],
       content: SingleChildScrollView
       (
@@ -90,33 +100,71 @@ class _Info extends State<Info>
             ),
             Container
             (
+              padding: EdgeInsets.only
+              (
+                top: 10,
+                bottom: 10
+              ),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width -100,
               child: TextField
               (
+                keyboardType: TextInputType.number ,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration
                 (
-                  hintText: "Input user id",
-                  border: InputBorder.none 
-                ),
-              )
-            ),
-            Container
-            (
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width -100,
-              child: TextField
-              (
-                textAlign: TextAlign.center,
-                decoration: InputDecoration
-                (
+                  icon: Icon
+                  (
+                    Icons.phone_callback,
+                    color: kButtonColor,
+                  ),
                   hintText: "Input phone number",
-                  border: InputBorder.none 
+                  border: OutlineInputBorder
+                  (
+                    borderSide: BorderSide
+                    (
+                      color: kMainColor,
+                    )
+                  )
                 ),
                 onChanged: (text)
                 {
                   _phoneNumber = text;
+                },
+              )
+            ),
+            Container
+            (
+              padding: EdgeInsets.only
+              (
+                top: 10,
+                bottom: 10
+              ),
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width -100,
+              child: TextField
+              (
+                keyboardType: TextInputType.streetAddress ,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration
+                (
+                  icon: Icon
+                  (
+                    Icons.home,
+                    color: kButtonColor,
+                  ),
+                  hintText: "Input address",
+                  border: OutlineInputBorder
+                  (
+                    borderSide: BorderSide
+                    (
+                      color: kMainColor,
+                    )
+                  )
+                ),
+                onChanged: (text)
+                {
+                  _address = text;
                 },
               )
             ),
@@ -130,92 +178,13 @@ class _Info extends State<Info>
                 initialCameraPosition: CameraPosition
                 (
                   target: _center,
-                  zoom: 11.0,
+                  zoom: 15.0,
                 ),
               ),
             )
-        ]
-    )
-    ),
-      // content:SingleChildScrollView
-      // (
-      //   child : Column
-      //   (
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>
-      //     [
-      //       Container
-      //       (
-      //         decoration: BoxDecoration
-      //         (
-      //           color: kMainColor,
-      //           borderRadius: BorderRadius.circular(36)
-      //         ),
-      //         child: Align
-      //         (
-      //           alignment: Alignment.center,  
-      //           child: Text
-      //           (
-      //             "Payment",
-      //             style: TextStyle
-      //             (
-      //               color: HexColor("##F9DC5C"), 
-      //               fontSize: 25,
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       Spacer(),
-      //       Container
-      //       (
-      //         alignment: Alignment.center,
-      //         width: MediaQuery.of(context).size.width -100,
-      //         child: TextField
-      //         (
-      //           textAlign: TextAlign.center,
-      //           decoration: InputDecoration
-      //           (
-      //             hintText: "Input user id",
-      //             border: InputBorder.none 
-      //           ),
-      //         )
-      //       ),
-      //       Container
-      //       (
-      //         alignment: Alignment.center,
-      //         width: MediaQuery.of(context).size.width -100,
-      //         child: TextField
-      //         (
-      //           textAlign: TextAlign.center,
-      //           decoration: InputDecoration
-      //           (
-      //             hintText: "Input phone number",
-      //             border: InputBorder.none 
-      //           ),
-      //           onChanged: (text)
-      //           {
-      //             _phoneNumber = text;
-      //           },
-      //         )
-      //       ),
-      //       Spacer(),
-      //       // SizedBox
-      //       // (
-      //       //   height: MediaQuery.of(context).size.height *0.5 -30,
-      //       //   width: MediaQuery.of(context).size.width -20,
-      //       //   child: GoogleMap
-      //       //   (
-      //       //     onMapCreated: _onMapCreated,
-      //       //     initialCameraPosition: CameraPosition
-      //       //     (
-      //       //       target: _center,
-      //       //       zoom: 11.0,
-      //       //     ),
-      //       //   ),
-      //       // )
-      //     ],
-      //   )
-      // )
+          ]
+        )
+      ),
     ); 
   }
 }

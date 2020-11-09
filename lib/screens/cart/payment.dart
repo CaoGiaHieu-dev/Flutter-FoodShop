@@ -1,6 +1,6 @@
 
 import 'package:foodshop/components/constants.dart';
-import 'package:foodshop/components/Cart.dart';
+import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/screens/cart/info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

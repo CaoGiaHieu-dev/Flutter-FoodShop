@@ -20,6 +20,6 @@ AppBar appbar(BuildContext context)
     actions: 
     [
       searchBar.getSearchAction(context),
-    ]
+    ],
   );
 } 
