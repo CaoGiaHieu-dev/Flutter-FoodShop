@@ -16,12 +16,15 @@ class CartScreen extends StatefulWidget
 
 class _CartScreen extends State<CartScreen>
 {
+  
   @override
   Widget build(BuildContext context)
   {
     Size size = MediaQuery.of(context).size;
     return Scaffold
     (
+      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset :false,
       appBar: AppBar
       (
         backgroundColor: kMainColor,

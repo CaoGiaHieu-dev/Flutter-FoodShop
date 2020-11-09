@@ -1,8 +1,8 @@
 
 import 'package:FoodShopApp/components/constants.dart';
-import 'package:FoodShopApp/components/getCategories.dart';
-import 'package:FoodShopApp/components/getProducts.dart';
-import 'package:FoodShopApp/components/getCart.dart';
+import 'package:FoodShopApp/components/Categories.dart';
+import 'package:FoodShopApp/components/Products.dart';
+import 'package:FoodShopApp/components/Cart.dart';
 import 'package:FoodShopApp/models/category.dart';
 import 'package:FoodShopApp/models/products.dart';
 import 'package:FoodShopApp/screens/cart/cart_screen.dart';

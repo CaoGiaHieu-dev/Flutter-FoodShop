@@ -35,6 +35,17 @@ class _Info extends State<Info>
   }
   // #endregion
 
+  // #region State
+  String _userId="";
+  String _phoneNumber="";
+  void initState()
+  {
+    super.initState();
+
+    
+  }
+  // #endregion
+
   @override
   Widget build(BuildContext context)
   {
@@ -51,10 +62,10 @@ class _Info extends State<Info>
           child: Icon(Icons.close),
         )
       ],
-      content: Container
+      content: SingleChildScrollView
       (
-        width: size.width -10,
-        child : Column
+        scrollDirection: Axis.vertical,
+        child: Column
         (
           children: <Widget>
           [
@@ -79,7 +90,38 @@ class _Info extends State<Info>
                 ),
               ),
             ),
-            
+            Container
+            (
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width -100,
+              child: TextField
+              (
+                textAlign: TextAlign.center,
+                decoration: InputDecoration
+                (
+                  hintText: "Input user id",
+                  border: InputBorder.none 
+                ),
+              )
+            ),
+            Container
+            (
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width -100,
+              child: TextField
+              (
+                textAlign: TextAlign.center,
+                decoration: InputDecoration
+                (
+                  hintText: "Input phone number",
+                  border: InputBorder.none 
+                ),
+                onChanged: (text)
+                {
+                  _phoneNumber = text;
+                },
+              )
+            ),
             SizedBox
             (
               height: MediaQuery.of(context).size.height *0.5 -30,
@@ -94,9 +136,88 @@ class _Info extends State<Info>
                 ),
               ),
             )
-          ],
-        )
-      ),
+        ]
+    )
+    ),
+      // content:SingleChildScrollView
+      // (
+      //   child : Column
+      //   (
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>
+      //     [
+      //       Container
+      //       (
+      //         decoration: BoxDecoration
+      //         (
+      //           color: kMainColor,
+      //           borderRadius: BorderRadius.circular(36)
+      //         ),
+      //         child: Align
+      //         (
+      //           alignment: Alignment.center,  
+      //           child: Text
+      //           (
+      //             "Payment",
+      //             style: TextStyle
+      //             (
+      //               color: HexColor("##F9DC5C"), 
+      //               fontSize: 25,
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //       Spacer(),
+      //       Container
+      //       (
+      //         alignment: Alignment.center,
+      //         width: MediaQuery.of(context).size.width -100,
+      //         child: TextField
+      //         (
+      //           textAlign: TextAlign.center,
+      //           decoration: InputDecoration
+      //           (
+      //             hintText: "Input user id",
+      //             border: InputBorder.none 
+      //           ),
+      //         )
+      //       ),
+      //       Container
+      //       (
+      //         alignment: Alignment.center,
+      //         width: MediaQuery.of(context).size.width -100,
+      //         child: TextField
+      //         (
+      //           textAlign: TextAlign.center,
+      //           decoration: InputDecoration
+      //           (
+      //             hintText: "Input phone number",
+      //             border: InputBorder.none 
+      //           ),
+      //           onChanged: (text)
+      //           {
+      //             _phoneNumber = text;
+      //           },
+      //         )
+      //       ),
+      //       Spacer(),
+      //       // SizedBox
+      //       // (
+      //       //   height: MediaQuery.of(context).size.height *0.5 -30,
+      //       //   width: MediaQuery.of(context).size.width -20,
+      //       //   child: GoogleMap
+      //       //   (
+      //       //     onMapCreated: _onMapCreated,
+      //       //     initialCameraPosition: CameraPosition
+      //       //     (
+      //       //       target: _center,
+      //       //       zoom: 11.0,
+      //       //     ),
+      //       //   ),
+      //       // )
+      //     ],
+      //   )
+      // )
     ); 
   }
 }

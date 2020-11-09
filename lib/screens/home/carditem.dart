@@ -2,7 +2,7 @@ import 'package:FoodShopApp/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/getCart.dart';
+import '../../components/Cart.dart';
 
 class CardItems extends StatefulWidget
 {
