@@ -68,24 +68,46 @@ double getTotalPrice()
   } 
   return total;
 }
-Future<Cart> postCart(int number ,String total ,String userId , String productId) async
+Future<Cart> postCart(String time ,String number ,String total ,String userId , String productId ,String phonenumber) async
 {
   // ignore: non_constant_identifier_names
-  var json_body = 
-  {
-    'number ': number,
-    'total' : total,
-    'UserId' : userId,
-    'ProductId' :productId,
-  };
+  // var json_body =
+  // (
+  //     'create_at' : time,
+  //     'number ': number,
+  //     'total' : total,
+  //     'UserId' : userId,
+  //     'ProductId' :productId,
+  //     'phonenumber' : phonenumber
+  // );
+ 
   final http.Response response = await http.post
   (
-    'https://5f96864411ab98001603ac4b.mockapi.io/Cart',body: json_body
+    'https://5f96864411ab98001603ac4b.mockapi.io/Cart',
+    headers: <String, String>
+    {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode
+    (
+      <String,String>
+      {
+        'create_at' : time,
+        'number ': number,
+        'total' : total,
+        'UserId' : userId,
+        'ProductId' :productId,
+        'phonenumber' : phonenumber
+      }
+    )
   );
 
-  if (response.statusCode == 201) {
+  if (response.statusCode == 201) 
+  {
     return Cart.fromJson(jsonDecode(response.body));
-  } else {
+  } 
+  else 
+  {
     throw Exception('Failed to post cart.');
   }
 }

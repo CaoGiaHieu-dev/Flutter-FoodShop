@@ -11,25 +11,24 @@ import 'package:hexcolor/hexcolor.dart';
 class Info extends StatefulWidget
 {
   final Size size;
-  final String total;
   Info
   (
     {
       Key key,
       this.size,
-      this.total
     }
   ) : super ( key: key);
 
   @override 
-  _Info createState() => _Info(size,total);
+  _Info createState() => _Info(size);
 }
 
 class _Info extends State<Info>
 {
   Size size ;
-  String total;
-  _Info(this.size,this.total);
+  _Info(this.size);
+
+  int _dateTime = DateTime.now().millisecondsSinceEpoch;
 
   // #region State
   String address="";
@@ -79,16 +78,26 @@ class _Info extends State<Info>
           RaisedButton
           (
             color: kButtonColor,
-            onPressed: ()
+            onPressed: ()=>
             {
-
+              for(int i = 0 ; i<cartList.length ; i++)
+              {
+                postCart
+                (
+                  _dateTime.toString(),
+                  getItemInCart(int.parse(cartList[i].id)).toString(), 
+                  ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(), 
+                  "1", 
+                  cartList[i].id.toString(),
+                  "0949937418"
+                )
+              } 
             },
             child: Row
             (
               children: <Widget>
               [
                 Icon(Icons.payments),
-                Spacer(),
                 Text
                 (
                   getTotalPrice().toString(),

@@ -55,6 +55,7 @@ class _ListCart extends State<ListCart>
                 (
                   children: <Widget>
                   [
+                    //image
                     Image.network
                     (
                       cartList[i].image,
@@ -62,6 +63,8 @@ class _ListCart extends State<ListCart>
                       width: 100,
                     ),
                     Spacer(),
+
+                    //total price
                     Align
                     (
                       alignment: Alignment.center,
@@ -75,6 +78,8 @@ class _ListCart extends State<ListCart>
                       ),
                     ),
                     Spacer(),
+
+                    //right conner
                     Align
                     (
                       alignment: Alignment.centerRight,
@@ -89,6 +94,7 @@ class _ListCart extends State<ListCart>
                         (
                           children: <Widget>
                           [
+                            //plus
                             SizedBox
                             (
                               width: size.width *0.1,
@@ -118,6 +124,7 @@ class _ListCart extends State<ListCart>
                                 ),
                               ),
                             ),
+                            // count in cart
                             Container
                             (
                               padding: EdgeInsets.only
@@ -135,6 +142,7 @@ class _ListCart extends State<ListCart>
                                 ),
                               ),
                             ),
+                            //remove
                             SizedBox
                             (
                               width: size.width *0.1,
