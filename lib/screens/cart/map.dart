@@ -3,8 +3,14 @@ import 'package:foodshop/components/constants.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class GetGoogleMap extends StatefulWidget {
-  const GetGoogleMap({Key key}) : super(key: key);
+class GetGoogleMap extends StatefulWidget 
+{
+  GetGoogleMap
+  (
+    {
+      Key key
+    }
+  ) : super(key: key);
 
   static final kInitialPosition = LatLng(-33.8567844, 151.213108);
 
@@ -12,34 +18,51 @@ class GetGoogleMap extends StatefulWidget {
   _GetGoogleMap createState() => _GetGoogleMap();
 }
 
-class _GetGoogleMap extends State<GetGoogleMap> {
+class _GetGoogleMap extends State<GetGoogleMap> 
+{
   PickResult selectedPlace;
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+  Widget build(BuildContext context) 
+  {
+    return Center
+    (
+      child: Column
+      (
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          RaisedButton(
+        children: <Widget>
+        [
+          RaisedButton
+          (
             child: Text("Load Google Map"),
-            onPressed: () {
-              Navigator.push(
+            onPressed: () 
+            {
+              Navigator.push
+              (
                 context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return PlacePicker(
+                MaterialPageRoute
+                (
+                  builder: (context) 
+                  {
+                    return PlacePicker
+                    (
                       apiKey: apiKey,
                       initialPosition: GetGoogleMap.kInitialPosition,
                       useCurrentLocation: true,
                       selectInitialPosition: true,
 
                       //usePlaceDetailSearch: true,
-                      onPlacePicked: (result) {
+                      onPlacePicked: (result) 
+                      {
                         selectedPlace = result;
                         Navigator.of(context).pop();
-                        setState(() {});
+                        setState
+                        ( () => 
+                          {
+                            print("${selectedPlace.adrAddress}") 
+                          }
+                        );
                       },
                       //forceSearchOnZoomChanged: true,
                       //automaticallyImplyAppBarLeading: false,

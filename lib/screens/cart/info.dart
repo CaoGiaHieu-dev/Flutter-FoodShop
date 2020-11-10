@@ -1,11 +1,10 @@
 
-
-import 'dart:async';
-
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'map.dart';
@@ -30,11 +29,6 @@ class _Info extends State<Info>
   Size size ;
   _Info(this.size);
 
-  // #region Google
-   Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-
-  // #endregion
-
   // #region State
   String address="";
   String phoneNumber="";
@@ -43,10 +37,31 @@ class _Info extends State<Info>
   void initState()
   {
     super.initState();
+    _getCurrentLocation();
   }
   // #endregion
 
-  
+  // #region Google Map
+  PickResult selectedPlace;
+  Geolocator geolocator ;
+  Position _currentPosition;
+  _getCurrentLocation() async
+  {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then
+    (
+      (Position position) 
+      {
+        setState(() =>
+        {
+          _currentPosition = position
+        });
+      }
+    ).catchError((e) 
+    {
+      print(e);
+    });
+  }
+  // #endregion
 
   @override
   Widget build(BuildContext context)
@@ -149,7 +164,7 @@ class _Info extends State<Info>
               (
                 controller: TextEditingController
                 (
-                  text: ""
+                  text: address
                 ),
                 keyboardType: TextInputType.streetAddress ,
                 textAlign: TextAlign.center,
@@ -175,26 +190,35 @@ class _Info extends State<Info>
                 },
               )
             ),
-            GetGoogleMap()
-            // SizedBox
-            // (
-            //   height: MediaQuery.of(context).size.height *0.5 -30,
-            //   width: MediaQuery.of(context).size.width -20,
-            //   child: GoogleMap 
-            //   (
-            //     myLocationButtonEnabled: true,
-            //     myLocationEnabled: true,
-            //     onMapCreated: (GoogleMapController controller)
-            //     {
-            //       _controller.complete(controller);
-            //     },
-            //     initialCameraPosition: CameraPosition
-            //     (
-            //       target: LatLng(0.0, 0.0),
-            //       zoom: 5,
-            //     ),
-            //   ),
-            // )
+            //GetGoogleMap()
+            SizedBox
+            (
+              height: MediaQuery.of(context).size.height *0.5 -30,
+              width: MediaQuery.of(context).size.width -20,
+              child: PlacePicker
+              (
+                apiKey: apiKey,
+                initialPosition: LatLng(_currentPosition.latitude,_currentPosition.longitude),
+                useCurrentLocation: true,
+                selectInitialPosition: true,
+                automaticallyImplyAppBarLeading:false,
+                onPlacePicked: (result) 
+                {
+                  selectedPlace = result;
+                  setState(() 
+                  {
+                    address = selectedPlace.formattedAddress;
+                  });
+                  
+                  // setState
+                  // ( () => 
+                  //   {
+                  //     address = selectedPlace.formattedAddress
+                  //   }
+                  // );
+                },
+              )
+            )
           ]
         )
       ),
