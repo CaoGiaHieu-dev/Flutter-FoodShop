@@ -4,6 +4,7 @@ import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/screens/cart/info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Payment extends StatefulWidget
@@ -24,13 +25,65 @@ class _Payment extends State<Payment>
 {
   Size size;
   _Payment(this.size);
+
+  // #region getLocation
+  Position _currentPosition;
+  String _currentAddress;
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  _getCurrentLocation() async
+  {
+    geolocator.getCurrentPosition
+    (
+      desiredAccuracy: LocationAccuracy.best
+    ).then
+    (
+      (Position position) 
+      {
+        _currentPosition = position;
+      }
+    ).catchError((e) 
+    {
+      print(_currentPosition.longitude  +  _currentPosition.latitude);
+    });
+  }
+
+  _getAddressFromLatLng() async 
+  {
+    try 
+    {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      _currentAddress = "${place.subThoroughfare}, ${place.thoroughfare}, ${place.subAdministrativeArea} , ${place.administrativeArea}, ${place.country} ";
+    } 
+    catch (e) 
+    {
+      print(e);
+    }
+  }
+  // #endregion
+
+  // #region State
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _getCurrentLocation();
+    _getAddressFromLatLng();
+  }
+  // #endregion
   @override
   Widget build(BuildContext context)
   {
     return GestureDetector
     (
-      onTap: () 
+      onTap: () async
       {
+        await _getCurrentLocation();
+        await _getAddressFromLatLng();
+        
         showDialog
         (
           context: context,
@@ -39,6 +92,8 @@ class _Payment extends State<Payment>
             return Info
             (
               size: size,
+              currentPosition : _currentPosition,
+              currentAddress : _currentAddress
             );
           }
         );

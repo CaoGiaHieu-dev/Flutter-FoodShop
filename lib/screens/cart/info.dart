@@ -1,34 +1,39 @@
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Info extends StatefulWidget
 {
+  final Position currentPosition;
+  final String currentAddress;
   final Size size;
   Info
   (
     {
       Key key,
-      this.size
+      this.size,
+      @required this.currentPosition,
+      @required this.currentAddress,
     }
   ) : super ( key: key);
 
   @override 
-  _Info createState() => _Info(size);
+  _Info createState() => _Info(size,currentPosition,currentAddress);
 }
 
 class _Info extends State<Info>
 {
   Size size ;
-  _Info(this.size);
+  Position currentPosition;
+  String currentAddress;
+  _Info(this.size,this.currentPosition,this.currentAddress);
 
   // #region Google
   // ignore: unused_field
   GoogleMapController _controller ;
-
-  final LatLng _center = const LatLng(10.762622, 106.660172);
 
   void _onMapCreated(GoogleMapController controller) 
   {
@@ -39,11 +44,15 @@ class _Info extends State<Info>
   // #region State
   String _address="";
   String _phoneNumber="";
+
+  @override
   void initState()
   {
     super.initState();
   }
   // #endregion
+
+  
 
   @override
   Widget build(BuildContext context)
@@ -144,6 +153,10 @@ class _Info extends State<Info>
               width: MediaQuery.of(context).size.width -100,
               child: TextField
               (
+                controller: TextEditingController
+                (
+                  text: currentAddress
+                ),
                 keyboardType: TextInputType.streetAddress ,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration
@@ -172,12 +185,12 @@ class _Info extends State<Info>
             (
               height: MediaQuery.of(context).size.height *0.5 -30,
               width: MediaQuery.of(context).size.width -20,
-              child: GoogleMap
+              child: GoogleMap 
               (
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition
                 (
-                  target: _center,
+                  target: LatLng(currentPosition.latitude, currentPosition.longitude),
                   zoom: 15.0,
                 ),
               ),
