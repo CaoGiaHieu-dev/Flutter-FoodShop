@@ -1,35 +1,28 @@
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Info extends StatefulWidget
 {
-  final Position currentPosition;
-  final String currentAddress;
   final Size size;
   Info
   (
     {
       Key key,
       this.size,
-      @required this.currentPosition,
-      @required this.currentAddress,
     }
   ) : super ( key: key);
 
   @override 
-  _Info createState() => _Info(size,currentPosition,currentAddress);
+  _Info createState() => _Info(size);
 }
 
 class _Info extends State<Info>
 {
   Size size ;
-  Position currentPosition;
-  String currentAddress;
-  _Info(this.size,this.currentPosition,this.currentAddress);
+  _Info(this.size);
 
   // #region Google
   // ignore: unused_field
@@ -42,8 +35,8 @@ class _Info extends State<Info>
   // #endregion
 
   // #region State
-  String _address="";
-  String _phoneNumber="";
+  String address="";
+  String phoneNumber="";
 
   @override
   void initState()
@@ -138,7 +131,7 @@ class _Info extends State<Info>
                 ),
                 onChanged: (text)
                 {
-                  _phoneNumber = text;
+                  phoneNumber = text;
                 },
               )
             ),
@@ -155,7 +148,7 @@ class _Info extends State<Info>
               (
                 controller: TextEditingController
                 (
-                  text: currentAddress
+                  text: ""
                 ),
                 keyboardType: TextInputType.streetAddress ,
                 textAlign: TextAlign.center,
@@ -177,7 +170,7 @@ class _Info extends State<Info>
                 ),
                 onChanged: (text)
                 {
-                  _address = text;
+                  address = text;
                 },
               )
             ),
@@ -188,11 +181,7 @@ class _Info extends State<Info>
               child: GoogleMap 
               (
                 onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition
-                (
-                  target: LatLng(currentPosition.latitude, currentPosition.longitude),
-                  zoom: 15.0,
-                ),
+                
               ),
             )
           ]
