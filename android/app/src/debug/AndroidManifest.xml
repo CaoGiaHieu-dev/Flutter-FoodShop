@@ -7,4 +7,6 @@
     <application android:usesCleartextTraffic="true">
 
     </application>
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyApWsNkDuwOLH7kuTuW17lJpIrGlpiU_bs"/>
 </manifest>

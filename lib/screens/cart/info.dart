@@ -1,8 +1,14 @@
+
+
+import 'dart:async';
+
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import 'map.dart';
 
 class Info extends StatefulWidget
 {
@@ -25,13 +31,8 @@ class _Info extends State<Info>
   _Info(this.size);
 
   // #region Google
-  // ignore: unused_field
-  GoogleMapController _controller ;
+   Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
-  void _onMapCreated(GoogleMapController controller) 
-  {
-    _controller = controller;
-  }
   // #endregion
 
   // #region State
@@ -174,16 +175,26 @@ class _Info extends State<Info>
                 },
               )
             ),
-            SizedBox
-            (
-              height: MediaQuery.of(context).size.height *0.5 -30,
-              width: MediaQuery.of(context).size.width -20,
-              child: GoogleMap 
-              (
-                onMapCreated: _onMapCreated,
-                
-              ),
-            )
+            GetGoogleMap()
+            // SizedBox
+            // (
+            //   height: MediaQuery.of(context).size.height *0.5 -30,
+            //   width: MediaQuery.of(context).size.width -20,
+            //   child: GoogleMap 
+            //   (
+            //     myLocationButtonEnabled: true,
+            //     myLocationEnabled: true,
+            //     onMapCreated: (GoogleMapController controller)
+            //     {
+            //       _controller.complete(controller);
+            //     },
+            //     initialCameraPosition: CameraPosition
+            //     (
+            //       target: LatLng(0.0, 0.0),
+            //       zoom: 5,
+            //     ),
+            //   ),
+            // )
           ]
         )
       ),
