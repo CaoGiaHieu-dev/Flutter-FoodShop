@@ -6,6 +6,7 @@ class Cart {
   String userId;
   String productId;
   String phonenumber;
+  String address;
 
   Cart(
       {this.id,
@@ -25,6 +26,7 @@ class Cart {
     userId = json['UserId'];
     productId = json['ProductId'];
     phonenumber = json['phonenumber'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() 
@@ -37,6 +39,7 @@ class Cart {
     data['UserId'] = this.userId;
     data['ProductId'] = this.productId;
     data['phonenumber'] = this.phonenumber;
+    data['address'] = this.address;
     return data;
   }
 }

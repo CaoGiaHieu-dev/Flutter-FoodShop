@@ -29,6 +29,8 @@ class _Info extends State<Info>
   _Info(this.size);
 
   int _dateTime = DateTime.now().millisecondsSinceEpoch;
+  bool _validatePhoneNumber = false;
+  bool _validateAddress = false;
 
   // #region State
   String address="";
@@ -78,20 +80,47 @@ class _Info extends State<Info>
           RaisedButton
           (
             color: kButtonColor,
-            onPressed: ()=>
+            onPressed: ()
             {
-              for(int i = 0 ; i<cartList.length ; i++)
+              if( address.isNotEmpty && phoneNumber.isNotEmpty )
               {
-                postCart
+                for(int i = 0 ; i<cartList.length ; i++)
+                {
+                  postCart
+                  (
+                    _dateTime.toString(),
+                    getItemInCart(int.parse(cartList[i].id)).toString(), 
+                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(), 
+                    "1", 
+                    cartList[i].id.toString(),
+                    phoneNumber,
+                    address
+                  );
+                }
+                SnackBar
                 (
-                  _dateTime.toString(),
-                  getItemInCart(int.parse(cartList[i].id)).toString(), 
-                  ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(), 
-                  "1", 
-                  cartList[i].id.toString(),
-                  "0949937418"
-                )
-              } 
+                  content: Text
+                  (
+                    "Success",
+                  ),
+                );
+                setState(() =>
+                {
+                  cartList.clear(),
+                  cleanCart(),    
+                });
+                Navigator.pop(context);
+              }
+              else
+              {
+                setState(() =>
+                {
+                  phoneNumber.isEmpty ? _validatePhoneNumber = true : _validatePhoneNumber = false,
+                  address.isEmpty ? _validateAddress = true : _validateAddress=false
+                });
+              }
+              
+              
             },
             child: Row
             (
@@ -148,6 +177,8 @@ class _Info extends State<Info>
                   ),
                 ),
               ),
+
+              // input phone number
               Container
               (
                 padding: EdgeInsets.only
@@ -163,6 +194,7 @@ class _Info extends State<Info>
                   textAlign: TextAlign.center,
                   decoration: InputDecoration
                   (
+                    errorText: _validatePhoneNumber ? "phone number can't be empty" : null,
                     icon: Icon
                     (
                       Icons.phone_callback,
@@ -179,10 +211,20 @@ class _Info extends State<Info>
                   ),
                   onChanged: (text)
                   {
-                    phoneNumber = text;
+                    if(text.isEmpty)
+                    {
+                      _validatePhoneNumber= true;
+                      phoneNumber = "";
+                    }
+                    else
+                    {
+                      phoneNumber = text;
+                    }
                   },
                 )
               ),
+
+              //input address
               Container
               (
                 padding: EdgeInsets.only
@@ -202,6 +244,7 @@ class _Info extends State<Info>
                   textAlign: TextAlign.center,
                   decoration: InputDecoration
                   (
+                    errorText: _validateAddress ? "Address can't not empty" : null,
                     icon: Icon
                     (
                       Icons.location_on,
@@ -218,7 +261,15 @@ class _Info extends State<Info>
                   ),
                   onChanged: (text)
                   {
-                    address = text;
+                    if(text.isEmpty)
+                    {
+                      _validateAddress= true;
+                      address.isEmpty;
+                    }
+                    else
+                    {
+                      address = text;
+                    }
                   },
                 )
               ),

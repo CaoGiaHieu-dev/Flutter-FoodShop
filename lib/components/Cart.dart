@@ -23,7 +23,10 @@ int countlistCart()
   return _cartList.length;
 }
 
-
+cleanCart()
+{
+  _cartList.clear();
+}
 
 int getItemInCart(int id)
 {
@@ -68,7 +71,7 @@ double getTotalPrice()
   } 
   return total;
 }
-Future<Cart> postCart(String time ,String number ,String total ,String userId , String productId ,String phonenumber) async
+Future<Cart> postCart(String time ,String number ,String total ,String userId , String productId ,String phonenumber,String address) async
 {
   // ignore: non_constant_identifier_names
   // var json_body =
@@ -97,7 +100,8 @@ Future<Cart> postCart(String time ,String number ,String total ,String userId , 
         'total' : total,
         'UserId' : userId,
         'ProductId' :productId,
-        'phonenumber' : phonenumber
+        'phonenumber' : phonenumber,
+        'address' : address
       }
     )
   );

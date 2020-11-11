@@ -90,6 +90,15 @@ class _Payment extends State<Payment>
               size: size,
             );
           }
+        ).then
+        (
+          (value) 
+          {
+            setState(() =>
+            {
+              
+            });
+          }
         );
       },
       child : Container

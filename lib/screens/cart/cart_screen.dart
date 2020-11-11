@@ -1,6 +1,8 @@
 
 
+import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/screens/cart/components/getupdatelistCart.dart';
 import 'package:foodshop/screens/cart/payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,16 +69,20 @@ class _CartScreen extends State<CartScreen>
                     ),
                   ),
                 ),
-                ListCart
+                UpdateListCart
                 (
-                  updateTotalPrice: () =>
-                  {
-                    setState(() 
+                  listProducts: cartList, 
+                  child: ListCart
+                  (
+                    updateTotalPrice: () =>
                     {
-                      
-                    })
-                  },
-                  size: size,
+                      setState(() 
+                      {
+                        
+                      })
+                    },
+                    size: size,
+                  ),
                 ),
                 Payment
                 (
