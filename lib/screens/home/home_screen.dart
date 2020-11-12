@@ -32,8 +32,9 @@ class _HomeSceen extends State<HomeScreen>
   Future<List<Category>> listcategories ;
   Future<List<Products>> listproducts ;
   int number ;
-  String detailbaner ="";
+  String detailbaner="";
   GlobalKey<ScaffoldState> _scaffold = GlobalKey();
+  
   // #endregion
   // #region Appbar custom
   _HomeSceen() 
@@ -48,6 +49,16 @@ class _HomeSceen extends State<HomeScreen>
   }
   // #endregion
   // #region StateFAB
+  // #region getBaner
+  String _detailbaner()
+  {
+    if ( detailbaner == "")
+    {
+      listcategories.then((value) => detailbaner = value.where((element) => element.id == "1").first.image);
+    }
+    return detailbaner;
+  }
+  // #endregion
   Widget fab = FloatingActionButton.extended
   (
     //key: UniqueKey(),
@@ -128,6 +139,7 @@ class _HomeSceen extends State<HomeScreen>
     {
       listproducts = getProducts(categoryId, "");
     }
+    
     super.initState();
   }
   // #endregion
@@ -167,7 +179,7 @@ class _HomeSceen extends State<HomeScreen>
                       setState(() 
                       {
                         listproducts = getProducts(item,"");
-                        listcategories.then((value) => detailbaner = value[int.parse(item)].image);
+                        listcategories.then((value) => detailbaner = value.where((element) => element.id == item).first.image);
                       });
                     },
                   ),
@@ -177,7 +189,7 @@ class _HomeSceen extends State<HomeScreen>
                     child: TitleItems
                     (
                       listProduct: listproducts,
-                      banner : detailbaner,
+                      banner : _detailbaner(),
                       callbackreload: ()  =>
                       {
                         _fabChange(),
