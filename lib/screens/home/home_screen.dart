@@ -7,6 +7,7 @@ import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
 import 'package:foodshop/screens/cart/cart_screen.dart';
 import 'package:foodshop/screens/home/components/getupdateProducts.dart';
+import 'package:foodshop/screens/home/components/getupdateTitleItems.dart';
 import 'package:foodshop/screens/home/listItems.dart';
 import 'package:foodshop/screens/home/swipeList.dart';
 import 'package:foodshop/screens/home/titleItems.dart';
@@ -31,6 +32,7 @@ class _HomeSceen extends State<HomeScreen>
   Future<List<Category>> listcategories ;
   Future<List<Products>> listproducts ;
   int number ;
+  String detailbaner ="";
   GlobalKey<ScaffoldState> _scaffold = GlobalKey();
   // #endregion
   // #region Appbar custom
@@ -116,7 +118,6 @@ class _HomeSceen extends State<HomeScreen>
   @override
   void initState()
   {
-
     listcategories = getCategories();
 
     if(categoryId == null || categoryId =="" )
@@ -160,21 +161,29 @@ class _HomeSceen extends State<HomeScreen>
                   (
                     size: size , 
                     category: listcategories,
+                    detailbaner : detailbaner,
                     presstoLoad: (item)
                     {
                       setState(() 
                       {
                         listproducts = getProducts(item,"");
+                        listcategories.then((value) => detailbaner = value[int.parse(item)].image);
                       });
                     },
-
                   ),
-
-                  TitleItems
+                  UpdateTitleItems
                   (
-                    category: listcategories,
+                    banner: detailbaner , 
+                    child: TitleItems
+                    (
+                      listProduct: listproducts,
+                      banner : detailbaner,
+                      callbackreload: ()  =>
+                      {
+                        _fabChange(),
+                      } 
+                    ),
                   ),
-
                   FutureBuilder
                   (
                     //key: UniqueKey(),

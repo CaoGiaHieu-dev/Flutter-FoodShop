@@ -12,6 +12,7 @@ class SwipeList extends StatefulWidget
   final Future<List<Category>> category;
   final Future<List<Products>> product ;
   final Function(String ) presstoLoad;
+  final String detailbaner;
   SwipeList
   (
     {
@@ -20,11 +21,12 @@ class SwipeList extends StatefulWidget
       @required this.size , 
       this.category,
       this.product,
-      this.presstoLoad
+      this.presstoLoad,
+      this.detailbaner
     }
   );
 
-  _SwipeList createState() => _SwipeList(size , category , product ,presstoLoad ) ;
+  _SwipeList createState() => _SwipeList(size , category , product ,presstoLoad ,detailbaner ) ;
 }
 
 
@@ -34,8 +36,9 @@ class _SwipeList extends State<SwipeList>
   Future<List<Category>> category ;
   Future<List<Products>> product ;
   Function(String ) presstoLoad;
+  String detailbaner;
   
-  _SwipeList(this.size,this.category,this.product,this.presstoLoad);
+  _SwipeList(this.size,this.category,this.product,this.presstoLoad,this.detailbaner);
 
   @override
   Widget build(BuildContext context )  
@@ -75,6 +78,7 @@ class _SwipeList extends State<SwipeList>
                           setState(()
                           {
                             this.widget.presstoLoad(foodSnap.data[i].id);
+                            // detailbaner = foodSnap.data[i].image.toString() ;
                             //  product = getProducts(foodSnap.data[i].id, "");
                             // Navigator.pushReplacement(context, MaterialPageRoute
                             // (

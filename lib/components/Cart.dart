@@ -28,6 +28,11 @@ cleanCart()
   _cartList.clear();
 }
 
+getListCart()
+{
+  return _cartList;
+}
+
 int getItemInCart(int id)
 {
   int count =0 ;

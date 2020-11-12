@@ -1,27 +1,33 @@
-import 'package:foodshop/models/category.dart';
+import 'package:foodshop/models/products.dart';
 import 'package:foodshop/screens/detail/detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+// ignore: must_be_immutable
 class TitleItems extends StatefulWidget
 {
-  final Future<List<Category>> category;
-
+  final Future<List<Products>> listProduct;
+  final String banner;
+  Function callbackreload;
   TitleItems
   (
     {
       Key key,
-      @required this.category
+      @required this.listProduct,
+      @required this.banner,
+      this.callbackreload
     }
   ) : super (key : key);
   @override
-  _TittleItems createState() => _TittleItems(this.category);
+  _TittleItems createState() => _TittleItems(this.listProduct ,this.banner,this.callbackreload);
 }
 class _TittleItems extends State<TitleItems>
 {
-  Future<List<Category>> category;
-  _TittleItems(this.category);
+  Future<List<Products>> listProduct;
+  String banner;
+  Function callbackreload;
+  _TittleItems(this.listProduct , this.banner ,this.callbackreload);
 
   @override
   Widget build(BuildContext context)
@@ -46,7 +52,7 @@ class _TittleItems extends State<TitleItems>
         ),
         FutureBuilder
         (
-          future: category,
+          future: listProduct,
           initialData: [],
           builder: (context, snapshot)
           {
@@ -56,16 +62,30 @@ class _TittleItems extends State<TitleItems>
               {
                 return GestureDetector
                 (
-                  onTap: () => 
+                  onTap: ()
                   {
-                    Navigator.push
-                    (
-                      context, 
-                      MaterialPageRoute
+                    setState(() =>
+                    {
+                      Navigator.push
                       (
-                        builder: (context) => MainDetail(),
-                      )
-                    )
+                        context, 
+                        MaterialPageRoute
+                        (
+                          builder: (context) => MainDetail
+                          (
+                            banner : this.widget.banner,
+                            listProduct :this.widget.listProduct,
+                            key: UniqueKey(),
+                          ),
+                        )
+                      ).then((value) 
+                      {
+                        setState(() 
+                        {
+                          this.widget.callbackreload();
+                        });
+                      })
+                    });
                   },
                   child: Align
                   (
