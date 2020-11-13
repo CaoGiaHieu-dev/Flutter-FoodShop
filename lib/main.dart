@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodshop/screens/history/history_screens.dart';
 import 'screens/home/home_screen.dart';
 
 void main() {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) 
   {
-    return MaterialApp(
+    return MaterialApp
+    (
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData
@@ -19,8 +21,74 @@ class MyApp extends StatelessWidget
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: MainScreens(),
     );
   }
 }
-  
+
+class MainScreens extends StatefulWidget
+{
+
+  @override
+  _MainScreens createState() => _MainScreens();
+}
+
+class _MainScreens extends State<MainScreens>
+{
+  List<Widget> originalList;
+  Map<int, bool> originalDic;
+  List<Widget> listScreens = [];
+  List<int> listScreensIndex;
+  int tabIndex = 0;
+  @override
+  void initState() 
+  {
+    super.initState();
+    listScreens = 
+    [
+      HomeScreen(),
+      HistoryScreen(),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Scaffold
+    (
+      body: listScreens[tabIndex],
+      bottomNavigationBar: BottomNavigationBar
+      (
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey[400],
+        backgroundColor: Theme.of(context).primaryColor,
+        currentIndex: tabIndex,
+        onTap: (int index) 
+        {
+          setState(() 
+          {
+            tabIndex = index;
+          });
+        },
+        items: 
+        [
+          BottomNavigationBarItem
+          (
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon(Icons.history),
+            label: "History",
+          ),
+          // BottomNavigationBarItem
+          // (
+          //   icon: Icon(Icons.people),
+          //   label: "User",
+          // ),
+        ]),
+      
+    );
+  }
+}
