@@ -76,19 +76,8 @@ double getTotalPrice()
   } 
   return total;
 }
-Future<Cart> postCart(String time ,String number ,String total ,String userId , String productId ,String phonenumber,String address) async
+Future<Cart> postCart(String time ,int number ,double total ,String userId , String productId ,String phonenumber,String address) async
 {
-  // ignore: non_constant_identifier_names
-  // var json_body =
-  // (
-  //     'create_at' : time,
-  //     'number ': number,
-  //     'total' : total,
-  //     'UserId' : userId,
-  //     'ProductId' :productId,
-  //     'phonenumber' : phonenumber
-  // );
- 
   final http.Response response = await http.post
   (
     'https://5f96864411ab98001603ac4b.mockapi.io/Cart',
@@ -98,10 +87,10 @@ Future<Cart> postCart(String time ,String number ,String total ,String userId , 
     },
     body: jsonEncode
     (
-      <String,String>
+      <Object,Object>
       {
         'create_at' : time,
-        'number ': number,
+        'number': number,
         'total' : total,
         'UserId' : userId,
         'ProductId' :productId,
@@ -119,4 +108,30 @@ Future<Cart> postCart(String time ,String number ,String total ,String userId , 
   {
     throw Exception('Failed to post cart.');
   }
+}
+
+Future<List<Cart>> getCart() async 
+{
+  final response = await http.get("https://5f96864411ab98001603ac4b.mockapi.io/Cart");
+  if (response.statusCode == 200) 
+  {
+    var parsedCart = json.decode(response.body);
+    //fetch api to model
+    List<Cart> _cart = List<Cart>();
+    parsedCart.forEach
+    (
+      (values) 
+      {
+        _cart.add(Cart.fromJson(values));
+      }
+    );
+    return _cart;
+  } 
+  else 
+  {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load ');
+  }
+  // var result = await http.get(apiUrl);
+  // return json.decode(result.body);
 }
