@@ -89,8 +89,8 @@ class _Info extends State<Info>
                   postCart
                   (
                     _dateTime.toString(),
-                    getItemInCart(int.parse(cartList[i].id)).toString(), 
-                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(), 
+                    getItemInCart(int.parse(cartList[i].id)), 
+                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ), 
                     "1", 
                     cartList[i].id.toString(),
                     phoneNumber,
