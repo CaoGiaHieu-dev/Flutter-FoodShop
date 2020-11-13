@@ -112,10 +112,10 @@ Future<Cart> postCart(String time ,int number ,double total ,String userId , Str
 
 Future<List<Cart>> getCart() async 
 {
-  final response = await http.get("https://5f96864411ab98001603ac4b.mockapi.io/Cart");
+  final response = await http.get("https://5f96864411ab98001603ac4b.mockapi.io/Cart",headers: {'Content-Type': 'application/json'});
   if (response.statusCode == 200) 
   {
-    var parsedCart = json.decode(response.body);
+    var parsedCart = json.decode(utf8.decode(response.bodyBytes));
     //fetch api to model
     List<Cart> _cart = List<Cart>();
     parsedCart.forEach
