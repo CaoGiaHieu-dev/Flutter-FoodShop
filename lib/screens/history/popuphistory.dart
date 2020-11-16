@@ -9,7 +9,8 @@ import 'package:hexcolor/hexcolor.dart';
 
 class PopUpHistory extends StatefulWidget
 {
-  final String productId;
+  final String address ;
+  final List<String> listProductId;
   final Size size;
   final Future<List<Category>> listcategories ;  
   PopUpHistory
@@ -18,22 +19,25 @@ class PopUpHistory extends StatefulWidget
       Key key,
       this.size,
       this.listcategories,
-      this.productId
+      this.listProductId,
+      this.address
     }
   ) : super ( key: key);
 
   @override 
-  _PopUpHistory createState() => _PopUpHistory(size,listcategories,productId);
+  _PopUpHistory createState() => _PopUpHistory(size,listcategories,listProductId,address);
 }
 
 class _PopUpHistory extends State<PopUpHistory>
 {
+  // #region property
   Size size ;
-  String productId;
+  String address ;
+  List<String> listProductId;
   Future<List<Category>> listcategories ;  
-  List<Products> _tempProduct =[];
-  List<Category> _tempCategory;
-  _PopUpHistory(this.size,this.listcategories,this.productId);
+  _PopUpHistory(this.size,this.listcategories,this.listProductId,this.address);
+
+  // #endregion
   // #region State
   @override
   void initState()
@@ -43,17 +47,22 @@ class _PopUpHistory extends State<PopUpHistory>
   }
 
   // #endregion
-
-  String _getData()
+  // #region GetProductDetail
+  List<Products> _tempProduct =[];
+  List<Category> _tempCategory;
+  List<Products> _getData()
   {
     try 
     {
-      return _tempProduct.where((element) => element.id == productId).first.name;
-      
+      return _tempProduct.where
+      (
+        (element) => listProductId.contains(element.id)
+        
+      ).toList();
     }
      catch (e) 
     {
-      return "";
+      return [];
     }
   }
 
@@ -68,15 +77,12 @@ class _PopUpHistory extends State<PopUpHistory>
       (
         (element) 
         { 
-          setState(() 
-          {
-            _tempProduct.add(element);
-          });
+          _tempProduct.add(element);
         }
       );
     }
   }
-
+  // #endregion
   @override
   Widget build(BuildContext context)
   {
@@ -123,11 +129,37 @@ class _PopUpHistory extends State<PopUpHistory>
                 ),
               ),
             ),
-            Text
+
+            //Address
+            Container
             (
-              _getData()
-            )
-            //List histor
+              margin: EdgeInsets.only
+              (
+                top: 10,
+                bottom: 10
+              ),
+              decoration: BoxDecoration
+              (
+                color: kMainColor,
+                borderRadius: BorderRadius.circular(15),
+
+              ),
+              child: Align
+              (
+                alignment: Alignment.center, 
+                child: Text
+                (
+                  "$address",
+                  textAlign: TextAlign.center,
+                  style: TextStyle
+                  (
+                    color: HexColor("##F9DC5C"), 
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            //List history
             
             // FutureBuilder
             // (
