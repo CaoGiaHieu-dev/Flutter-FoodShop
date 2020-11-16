@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:foodshop/models/products.dart';
 import 'package:http/http.dart' as http;
 
-String getProductApi( String categoryId , String productId)
+String _getProductApi( String categoryId , String productId)
 {
   return "https://5f96864411ab98001603ac4b.mockapi.io/Categories/$categoryId/Products/$productId";
 }
@@ -10,7 +10,7 @@ String getProductApi( String categoryId , String productId)
 
 Future<List<Products>> getProducts(String categoryId , String productId) async 
 {
-  final response = await http.get(getProductApi(categoryId,productId));
+  final response = await http.get(_getProductApi(categoryId,productId));
   if (response.statusCode == 200) 
   {
     var parsedProducts = json.decode(response.body);

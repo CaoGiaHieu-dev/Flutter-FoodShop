@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/screens/history/history_screens.dart';
 import 'screens/home/home_screen.dart';
 
@@ -61,7 +62,7 @@ class _MainScreens extends State<MainScreens>
       (
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[400],
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: kMainColor,
         currentIndex: tabIndex,
         onTap: (int index) 
         {

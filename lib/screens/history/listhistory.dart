@@ -1,14 +1,18 @@
 
+
 import 'package:foodshop/components/cart.dart';
+import 'package:foodshop/components/categories.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/screens/history/popuphistory.dart';
 import 'package:intl/intl.dart';
 
 class ListHistory extends StatefulWidget
 {
   final Size size;
+  
   ListHistory
   (
     {
@@ -25,7 +29,7 @@ class _ListHistory extends State<ListHistory>
   Size size;
   _ListHistory(this.size);
   
-  Future<List<Cart>> _listCart ;   
+  Future<List<Cart>> _listCart ;    
 
   // #region Permisson
   String _address(String __address)
@@ -71,6 +75,7 @@ class _ListHistory extends State<ListHistory>
             {
               if(snapshot.hasData && snapshot.connectionState==ConnectionState.done)
               {
+                snapshot.data.sort((a,b) => int.parse(b.createAt).compareTo(int.parse(a.createAt)));  //sort by create at time
                 return GridView
                 (
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
@@ -83,91 +88,119 @@ class _ListHistory extends State<ListHistory>
                   children: <Widget>
                   [
                     for( int i =0 ; i < snapshot.data.length ; i++)
-                      Card
+                      GestureDetector
                       (
-                        margin: EdgeInsets.only
-                        (
-                          left: 10,
-                          right: 10,
-                          top: 10,
-                          bottom: 10
-                        ),
-                        shape: BeveledRectangleBorder
-                        (
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        color: kMainColor,
-                        child: Padding
-                        (
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column
+                        onTap: () 
+                        {
+                          showDialog
                           (
-                            children: <Widget>
-                            [
-                              Center
+                            context: context,
+                            builder: (BuildContext context)
+                            {
+                              return PopUpHistory
                               (
-                                child: Text
+                                size: size,
+                                listcategories: getCategories(),
+                                productId : snapshot.data[i].productId
+                              );
+                            }
+                          ).then
+                          (
+                            (value) 
+                            {
+                              setState(() =>
+                              {
+                                
+                              });
+                            }
+                          );
+                        },
+                        child: Card
+                        (
+                          margin: EdgeInsets.only
+                          (
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                          ),
+                          shape: BeveledRectangleBorder
+                          (
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: kMainColor,
+                          child: Padding
+                          (
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column
+                            (
+                              children: <Widget>
+                              [
+                                Center
                                 (
-                                  DateFormat.yMMMMEEEEd().add_jm().format(DateTime.fromMicrosecondsSinceEpoch(int.parse(snapshot.data[i].createAt)*1000)).toString(),
-                                  style: TextStyle
+                                  child: Text
                                   (
-                                    color: Colors.white,
+                                    DateFormat.yMMMMEEEEd().add_jm().format(DateTime.fromMicrosecondsSinceEpoch(int.parse(snapshot.data[i].createAt)*1000)).toString(), //convert from timesplap to datetime
+                                    style: TextStyle
+                                    (
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Spacer(),
-                              Row
-                              (
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>
-                                [
-                                  Align
-                                  (
-                                    alignment: Alignment.centerLeft,
-                                    child: Text
+                                Spacer(),
+                                Row
+                                (
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>
+                                  [
+                                    Align
                                     (
-                                      "Address : ${_address(snapshot.data[i].address)}",
-                                      style: TextStyle
+                                      alignment: Alignment.centerLeft,
+                                      child: Text
                                       (
-                                        color: Colors.white,
-                                        fontSize: 15
+                                        "Address : ${_address(snapshot.data[i].address)}",
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 15
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  Align
-                                  (
-                                    alignment: Alignment.centerRight,
-                                    
-                                    child: Column
+                                    Spacer(),
+                                    Align
                                     (
-                                      children : <Widget>
-                                      [
-                                        Text
-                                        (
-                                          "Total Product : ${snapshot.data[i].number}",
-                                          style: TextStyle
+                                      alignment: Alignment.centerRight,
+                                      
+                                      child: Column
+                                      (
+                                        children : <Widget>
+                                        [
+                                          Text
                                           (
-                                            color: Colors.white
+                                            "Total Product : ${snapshot.data[i].number}",
+                                            style: TextStyle
+                                            (
+                                              color: Colors.white
+                                            ),
                                           ),
-                                        ),
-                                        Text
-                                        (
-                                          "Total Price : ${snapshot.data[i].total}",
-                                          style: TextStyle
+                                          Text
                                           (
-                                            color: Colors.white
-                                          ),
-                                        )
-                                      ]
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Spacer()
-                            ],
-                          ),
-                        )
+                                            "Total Price : ${snapshot.data[i].total}",
+                                            style: TextStyle
+                                            (
+                                              color: Colors.white
+                                            ),
+                                          )
+                                        ]
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Spacer()
+                              ],
+                            ),
+                          )
+                        ),
                       )
                   ],
                 );
