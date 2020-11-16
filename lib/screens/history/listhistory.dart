@@ -7,6 +7,7 @@ import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/models/products.dart';
 import 'package:foodshop/screens/history/popuphistory.dart';
 import 'package:intl/intl.dart';
 
@@ -77,10 +78,10 @@ class _ListHistory extends State<ListHistory>
   }
   _getListIdProduct(List<dynamic> _list)
   {
-    List<String> _idList=[];
+    List<Cart> _idList=[];
     for ( int i =0 ; i < _list.length ; i++)
     {
-      _idList.add(_list[i].productId);
+      _idList.add(_list[i]);
     }
     return _idList;
   }
@@ -108,7 +109,7 @@ class _ListHistory extends State<ListHistory>
               if(snapshot.hasData && snapshot.connectionState==ConnectionState.done)
               {
                 snapshot.data.sort((a,b) => int.parse(b.createAt).compareTo(int.parse(a.createAt)));  //sort by create at time
-                var _group = groupBy(snapshot.data, (obj) => (obj as Cart).createAt); // group hostory
+                var _group = groupBy(snapshot.data, (obj) => (obj as Cart).createAt); // group history
                 
                 return GridView
                 (
@@ -135,8 +136,8 @@ class _ListHistory extends State<ListHistory>
                               (
                                 size: size,
                                 listcategories: getCategories(),
-                                listProductId : _getListIdProduct(_group.values.first),
-                                address : _group.values.first[0].address
+                                listProduct : _getListIdProduct(_group.values.where((element) => element.first.createAt == items).first),
+                                address : _group.values.where((element) => element.first.createAt == items).first[0].address
                               );
                             }
                           ).then

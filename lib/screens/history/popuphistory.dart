@@ -3,14 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/products.dart';
+import 'package:foodshop/models/cart.dart';
 import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/screens/history/components/getupdateHistory.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class PopUpHistory extends StatefulWidget
 {
   final String address ;
-  final List<String> listProductId;
+  final List<Cart> listProduct;
   final Size size;
   final Future<List<Category>> listcategories ;  
   PopUpHistory
@@ -19,13 +21,13 @@ class PopUpHistory extends StatefulWidget
       Key key,
       this.size,
       this.listcategories,
-      this.listProductId,
+      this.listProduct,
       this.address
     }
   ) : super ( key: key);
 
   @override 
-  _PopUpHistory createState() => _PopUpHistory(size,listcategories,listProductId,address);
+  _PopUpHistory createState() => _PopUpHistory(size,listcategories,listProduct,address);
 }
 
 class _PopUpHistory extends State<PopUpHistory>
@@ -33,9 +35,9 @@ class _PopUpHistory extends State<PopUpHistory>
   // #region property
   Size size ;
   String address ;
-  List<String> listProductId;
+  List<Cart> listProduct;
   Future<List<Category>> listcategories ;  
-  _PopUpHistory(this.size,this.listcategories,this.listProductId,this.address);
+  _PopUpHistory(this.size,this.listcategories,this.listProduct,this.address);
 
   // #endregion
   // #region State
@@ -44,30 +46,17 @@ class _PopUpHistory extends State<PopUpHistory>
   {
     super.initState();
     _getProducts();
+    //_getData();
   }
 
   // #endregion
   // #region GetProductDetail
   List<Products> _tempProduct =[];
   List<Category> _tempCategory;
-  List<Products> _getData()
-  {
-    try 
-    {
-      return _tempProduct.where
-      (
-        (element) => listProductId.contains(element.id)
-        
-      ).toList();
-    }
-     catch (e) 
-    {
-      return [];
-    }
-  }
 
-  _getProducts() async
+  Future _getProducts() async
   {
+     _tempProduct =[];
     _tempCategory = await listcategories;
     List<Products> _tempList;
     for(var items in _tempCategory)
@@ -77,7 +66,10 @@ class _PopUpHistory extends State<PopUpHistory>
       (
         (element) 
         { 
-          _tempProduct.add(element);
+          setState(() =>
+          {
+            _tempProduct.add(element)
+          });
         }
       );
     }
@@ -160,22 +152,102 @@ class _PopUpHistory extends State<PopUpHistory>
               ),
             ),
             //List history
+            UpdateHistory
+            (
+              listProducts: _tempProduct, 
+              child: _tempProduct.length == 0
+              ? Center(child: CircularProgressIndicator(),)
+              : SizedBox
+              (
+                height: size.height *0.6,
+                width: size.width  - 20 ,
+                child : ListView.builder
+                (
+                  scrollDirection: Axis.vertical,
+                  itemCount: listProduct.length,
+                  itemBuilder : (context, i) 
+                  {
+                    return Card
+                    (
+                      shape: BeveledRectangleBorder
+                      (
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: kMainColor,
+                      child: Row
+                      (
+                        children: <Widget>
+                        [
+                          //image
+                          Image.network
+                          (
+                            _tempProduct[i].image,
+                            height: 120 ,
+                            width: 100,
+                          ),
+                          Spacer(),
+
+                          //total price
+                          Align
+                          (
+                            alignment: Alignment.center,
+                            child: Text
+                            (
+                              listProduct[i].total.toString(),
+                              style: TextStyle
+                              (
+                                color: Colors.white
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+
+                          //right conner
+                          Align
+                          (
+                            alignment: Alignment.centerRight,
+                            child: Container
+                            (
+                              padding: EdgeInsets.only
+                              (
+                                left: 10,
+                                right: 10
+                              ),
+                              child: Row
+                              (
+                                children: <Widget>
+                                [
+                                  // count in cart
+                                  Container
+                                  (
+                                    padding: EdgeInsets.only
+                                    (
+                                      left: 10,
+                                      right: 10
+                                    ),
+                                    child: Text
+                                    (
+                                      listProduct[i].number.toString(),
+                                      style: TextStyle
+                                      (
+                                        color: Colors.white,
+                                        fontSize: 25
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ),
+                            )
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                )
+              )
+          
+            )
             
-            // FutureBuilder
-            // (
-            //   future: _getProducts(),
-            //   builder: (context, snapshot) 
-            //   {
-            //     if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
-            //     {
-            //       return Text
-            //       (
-            //         snapshot.data.id
-            //       );
-            //     }
-            //     return CircularProgressIndicator();
-            //   },
-            // )
           ]
         )
       ),
