@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/screens/history/history_screens.dart';
+import 'package:foodshop/user/user_screen.dart';
 import 'screens/home/home_screen.dart';
 
 void main() {
@@ -49,6 +50,7 @@ class _MainScreens extends State<MainScreens>
     [
       HomeScreen(),
       HistoryScreen(),
+      UserScreen(),
     ];
   }
 
@@ -82,6 +84,11 @@ class _MainScreens extends State<MainScreens>
           (
             icon: Icon(Icons.history),
             label: "History",
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon(Icons.people),
+            label: "User",
           ),
           // BottomNavigationBarItem
           // (
