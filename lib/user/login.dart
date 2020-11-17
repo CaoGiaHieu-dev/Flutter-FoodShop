@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodshop/components/constants.dart';
-import 'package:foodshop/user/user_screen.dart';
+import 'package:foodshop/components/user.dart';
+import 'package:foodshop/models/user.dart';
 
 class Login extends StatefulWidget
 {
@@ -18,7 +19,34 @@ class _Login extends State<Login>
   bool _validatePassword = false;
   String _username ;
   String _password ;
+  Future<List<User>> listUser;
+  // #endregion
 
+  // #region State
+  @override
+  void initState()
+  {
+    super.initState();
+    listUser = getUser();
+    _username="";
+    _password="";
+  }
+  // #endregion
+
+  // #region Check Login
+  List<User> _tempList =[];
+  _checkUser()
+  {
+    listUser.then
+    (
+      (value) => _tempList = value.where((element) => element.username == _username && element.password == _password).toList(),
+    );
+    if(_tempList.length > 0)
+    {
+      return true;
+    }
+    return false;
+  }
   // #endregion
 
   @override
@@ -27,11 +55,7 @@ class _Login extends State<Login>
     Size size = MediaQuery.of(context).size;
     return AlertDialog
     (
-      actions: 
-      [
-        
-      ],
-      content : SafeArea
+      content : SingleChildScrollView
       (
         child: Center
         (
@@ -72,7 +96,7 @@ class _Login extends State<Login>
                 width: MediaQuery.of(context).size.width -100,
                 child: TextField
                 (
-                  keyboardType: TextInputType.number ,
+                  keyboardType: TextInputType.emailAddress ,
                   textAlign: TextAlign.center,
                   controller: TextEditingController
                   (
@@ -159,8 +183,16 @@ class _Login extends State<Login>
                 {
                   setState(() =>
                   {
+                    if(_checkUser()==true)
+                    {
+                      Navigator.pop(context)
+                    }
+                    else
+                    {
+                      _username.isEmpty ? _validateUserName = true : _validateUserName = false,
+                      _password.isEmpty ? _validatePassword = true : _validatePassword = false
+                    }
                   });
-                  Navigator.pop(context);
                 },
                 child: Container
                 (
