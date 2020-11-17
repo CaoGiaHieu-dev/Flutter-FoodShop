@@ -5,9 +5,7 @@ import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/components/categories.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/cart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodshop/models/products.dart';
 import 'package:foodshop/screens/history/popuphistory.dart';
 import 'package:intl/intl.dart';
 

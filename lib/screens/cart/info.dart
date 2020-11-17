@@ -28,20 +28,23 @@ class _Info extends State<Info>
   Size size ;
   _Info(this.size);
 
+  // #region property
   int _dateTime = DateTime.now().millisecondsSinceEpoch;
   bool _validatePhoneNumber = false;
   bool _validateAddress = false;
-
-  // #region State
   String address="";
   String phoneNumber="";
-  bool _isLoading =true;
+  bool _isLoading ;
+  // #endregion
+
+  // #region State
+  
   @override
   void initState()
   {
     super.initState();
     _getCurrentLocation();
-    _isLoading = false;
+    _isLoading = true;
   }
   // #endregion
 
@@ -57,7 +60,8 @@ class _Info extends State<Info>
       {
         setState(() =>
         {
-          _currentPosition = position
+          _currentPosition = position,
+          _isLoading = false
         });
       }
     ).catchError((e) 
@@ -119,8 +123,6 @@ class _Info extends State<Info>
                   address.isEmpty ? _validateAddress = true : _validateAddress=false
                 });
               }
-              
-              
             },
             child: Row
             (
@@ -192,6 +194,10 @@ class _Info extends State<Info>
                 (
                   keyboardType: TextInputType.number ,
                   textAlign: TextAlign.center,
+                  controller: TextEditingController
+                  (
+                    text: phoneNumber
+                  ),
                   decoration: InputDecoration
                   (
                     errorText: _validatePhoneNumber ? "phone number can't be empty" : null,
