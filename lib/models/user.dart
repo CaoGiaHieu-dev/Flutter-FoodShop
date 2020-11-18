@@ -4,9 +4,15 @@ class User {
   String password;
   String avatar;
   String address;
+  String phonenumber;
 
   User(
-      {this.id, this.username, this.password, this.avatar, this.address});
+      {this.id,
+      this.username,
+      this.password,
+      this.avatar,
+      this.address,
+      this.phonenumber});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -14,6 +20,7 @@ class User {
     password = json['password'];
     avatar = json['avatar'];
     address = json['address'];
+    phonenumber = json['phonenumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +30,7 @@ class User {
     data['password'] = this.password;
     data['avatar'] = this.avatar;
     data['address'] = this.address;
+    data['phonenumber'] = this.phonenumber;
     return data;
   }
 }
