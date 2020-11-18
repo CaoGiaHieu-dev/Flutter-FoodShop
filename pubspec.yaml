@@ -37,8 +37,8 @@ dependencies:
   google_maps_place_picker: ^1.0.0
   intl: ^0.16.1
   collection: ^1.14.13
-  flutter_secure_storage: ^3.3.5
   shared_preferences: ^0.5.12+4
+  cached_network_image: ^2.3.3
 
 dev_dependencies:
   flutter_test:
