@@ -56,7 +56,7 @@ class _UserScreen extends State<UserScreen>
                     context: context,
                     builder: (BuildContext context)
                     {
-                      return Login();
+                      return Login(isLogin: isLogin,);
                     }
                   ).then
                   (
@@ -64,7 +64,7 @@ class _UserScreen extends State<UserScreen>
                     {
                       setState(() =>
                       {
-                        isLogin = true
+                        isLogin = value
                       });
                     }
                   );

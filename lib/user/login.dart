@@ -7,9 +7,16 @@ import 'package:foodshop/models/user.dart';
 
 class Login extends StatefulWidget
 {
-
+  final bool isLogin ;
+  Login
+  (
+    {
+      Key key ,
+      this.isLogin
+    }
+  ) : super (key: key);
   @override
-  _Login createState() => _Login();
+  _Login createState() => _Login(isLogin);
 }
 
 class _Login extends State<Login>
@@ -20,6 +27,8 @@ class _Login extends State<Login>
   String _username ;
   String _password ;
   Future<List<User>> listUser;
+  bool isLogin ;
+  _Login(isLogin);
   // #endregion
 
   // #region State
@@ -37,15 +46,28 @@ class _Login extends State<Login>
   List<User> _tempList =[];
   _checkUser()
   {
+    
     listUser.then
     (
-      (value) => _tempList = value.where((element) => element.username == _username && element.password == _password).toList(),
+      (value) 
+      {
+        _tempList = value.where((element) => element.username == _username && element.password == _password).toList();
+        if(_tempList.isNotEmpty)
+        {
+          setState(() 
+          {
+            isLogin = true;  
+          });
+        }
+        else
+        {
+          setState(() 
+          {
+            isLogin = false;  
+          });
+        }
+      } 
     );
-    if(_tempList.length > 0)
-    {
-      return true;
-    }
-    return false;
   }
   // #endregion
 
@@ -177,20 +199,50 @@ class _Login extends State<Login>
                   },
                 )
               ),
+
+              //button
               GestureDetector
               (
                 onTap: () 
                 {
-                  setState(() =>
+                  setState(() async =>
                   {
-                    if(_checkUser()==true)
+                    await _checkUser(),
+                    if(isLogin==true)
                     {
-                      Navigator.pop(context)
+                      Navigator.pop(context,isLogin)
                     }
                     else
                     {
                       _username.isEmpty ? _validateUserName = true : _validateUserName = false,
-                      _password.isEmpty ? _validatePassword = true : _validatePassword = false
+                      _password.isEmpty ? _validatePassword = true : _validatePassword = false,
+                      if(_username.isNotEmpty && _password.isNotEmpty)
+                      {
+                        showDialog
+                        (
+                          context: context,
+                          child: AlertDialog
+                          (
+                            actions: 
+                            [
+                              RaisedButton
+                              (
+                                onPressed: ()
+                                {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.close),
+                              )
+                            ],
+                            content: Container
+                            (
+                              height: 100,
+                              width: 100,
+                              child: Text("error"),
+                            ),
+                          )
+                        )
+                      }
                     }
                   });
                 },
