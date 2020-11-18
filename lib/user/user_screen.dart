@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/user.dart';
 import 'package:foodshop/models/user.dart';
 import 'package:foodshop/user/components/userpreferences.dart';
 import 'package:foodshop/user/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:foodshop/user/profile.dart';
 
 class UserScreen extends StatefulWidget
 {
@@ -74,34 +75,32 @@ class _UserScreen extends State<UserScreen>
   @override
   Widget build(BuildContext context)
   {
+    Size size = MediaQuery.of(context).size;
     return Scaffold
     (
+      appBar: AppBar
+      (
+        //Style
+        backgroundColor: kMainColor,
+        elevation: 0,
+        
+        //tittle
+        centerTitle: true,
+        title: new Text('Food Shop tutorial'),
+    //Action        
+      ),
       body: _isLoading == true
       ? Center(child: CircularProgressIndicator(),)
-      : Center
+      : Material
       (
         child:isLogin ==true 
-        ? 
+
+        ? Profile
         (
-          SingleChildScrollView
-          (
-            padding: EdgeInsets.all(20),
-            child: Container
-            (
-              decoration: BoxDecoration
-              (
-                
-              ),
-              child: Image
-              (
-                image: NetworkImage
-                (
-                  listUser.first.avatar
-                ),
-              )
-            ),
-          )
+          listUser : listUser,
+          size: size,
         )
+
         : Center
         (
           child: Column
