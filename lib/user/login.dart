@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/user.dart';
 import 'package:foodshop/models/user.dart';
+import 'package:foodshop/user/components/userpreferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget
 {
@@ -27,6 +29,8 @@ class _Login extends State<Login>
   String _username ;
   String _password ;
   Future<List<User>> listUser;
+
+  
   bool isLogin ;
   _Login(isLogin);
   // #endregion
@@ -44,10 +48,9 @@ class _Login extends State<Login>
 
   // #region Check Login
   List<User> _tempList =[];
-  _checkUser()
+  _checkUser() async
   {
-    
-    listUser.then
+    await listUser.then
     (
       (value) 
       {
@@ -205,11 +208,13 @@ class _Login extends State<Login>
               (
                 onTap: () 
                 {
-                  setState(() async =>
+                  setState(() =>
                   {
-                    await _checkUser(),
+                     _checkUser(),
                     if(isLogin==true)
                     {
+                      UserPrefrences().setUserName(_username),
+                      UserPrefrences().setPassword(_password),
                       Navigator.pop(context,isLogin)
                     }
                     else

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/screens/history/history_screens.dart';
+import 'package:foodshop/user/components/userpreferences.dart';
 import 'package:foodshop/user/user_screen.dart';
 import 'screens/home/home_screen.dart';
 
-void main() {
+void main() async
+{
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserPrefrences().init();
   runApp(MyApp());
 }
 
