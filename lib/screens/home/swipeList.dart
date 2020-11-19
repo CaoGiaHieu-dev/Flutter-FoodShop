@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
@@ -104,15 +105,23 @@ class _SwipeList extends State<SwipeList>
                             width: MediaQuery.of(context).size.width - 50,
                             decoration: BoxDecoration
                             (
-                              image: DecorationImage
-                              (
-                                image: NetworkImage(foodSnap.data[i].image.toString() ,scale: 1.0),onError: (exception, stackTrace) 
-                                {
-                                  return Center(child:  CircularProgressIndicator(),);  
-                                },
-                                fit: BoxFit.fill
-                              ),
+                              // image: DecorationImage
+                              // (
+                              //   image: NetworkImage(foodSnap.data[i].image.toString() ,scale: 1.0),onError: (exception, stackTrace) 
+                              //   {
+                              //     return Center(child:  CircularProgressIndicator(),);  
+                              //   },
+                              //   fit: BoxFit.fill
+                              // ),
                               borderRadius: BorderRadius.all(Radius.circular(36))
+                            ),
+                            child: CachedNetworkImage
+                            (
+                              imageUrl: foodSnap.data[i].image,
+                              width: size.width -50,
+                              alignment: Alignment.center,
+                              placeholder: (context, url) => new CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => new Icon(Icons.error),
                             ),
                           ),
                         )

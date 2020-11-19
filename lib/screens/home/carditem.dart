@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,12 +53,21 @@ class _CardItems extends State<CardItems>
         (
           children: <Widget>
           [
-            Image.network
+            CachedNetworkImage
             (
-              foodSnap.data[index].image.toString() ,
-              height: MediaQuery.of(context).size.height * 0.25 - 100,
+              imageUrl: foodSnap.data[index].image.toString(),
               width: MediaQuery.of(context).size.width -20,
+              height: MediaQuery.of(context).size.height * 0.25 - 100,
+              alignment: Alignment.center,
+              placeholder: (context, url) => new CircularProgressIndicator(),
+              errorWidget: (context, url, error) => new Icon(Icons.error),
             ),
+            // Image.network
+            // (
+            //   foodSnap.data[index].image.toString() ,
+            //   height: MediaQuery.of(context).size.height * 0.25 - 100,
+            //   width: MediaQuery.of(context).size.width -20,
+            // ),
             Spacer(),
             Align
             (
