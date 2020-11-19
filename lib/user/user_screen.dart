@@ -94,6 +94,7 @@ class _UserScreen extends State<UserScreen>
         centerTitle: true,
         title: new Text('Food Shop tutorial'),
       ),
+      
       body: _isLoading == true
       ? Center(child: CircularProgressIndicator(),)
       : Material
