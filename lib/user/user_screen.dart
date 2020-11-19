@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
-import 'package:foodshop/components/user.dart';
 import 'package:foodshop/models/user.dart';
 import 'package:foodshop/user/components/userpreferences.dart';
 import 'package:foodshop/user/login.dart';
@@ -9,9 +8,24 @@ import 'package:foodshop/user/profile.dart';
 
 class UserScreen extends StatefulWidget
 {
+  final bool isLogin;
+  final bool isLoading;
+  final List<User> listUser;
+  final Function checkLogin;
+
+  UserScreen
+  (
+    {
+      Key key,
+      @required this.isLogin,
+      @required this.listUser,
+      @required this.checkLogin,
+      @required this.isLoading
+    }
+  ) : super ( key: key);
 
   @override
-  _UserScreen createState() => _UserScreen();
+  _UserScreen createState() => _UserScreen(isLogin,listUser,checkLogin,isLoading);
 }
 
 class _UserScreen extends State<UserScreen>
@@ -21,27 +35,29 @@ class _UserScreen extends State<UserScreen>
   List<User> listUser;
   String _username;
   String _password;
-  bool _isLoading;
+  bool isLoading;
+  Function checkLogin;
   // #endregion
 
+  _UserScreen(this.isLogin,this.listUser,this.checkLogin,this.isLoading);
   // #region State
   @override
   void initState()
   {
     super.initState();
     
-    _isLoading = true;
-    _getStorage();
-    _checkLogin();
+    // _isLoading = true;
+    // _getStorage();
+    // _checkLogin();
   }
   // #endregion
   
   // #region get Storage Data
-  _getStorage()
-  {
-    _username = UserPrefrences().getUserName; //get storage username
-    _password = UserPrefrences().getPassword; //get storage password
-  }
+//   _getStorage()
+//   {
+//     _username = UserPrefrences().getUserName; //get storage username
+//     _password = UserPrefrences().getPassword; //get storage password
+//   }
   // #endregion
 
   // #region Logout
@@ -49,42 +65,41 @@ class _UserScreen extends State<UserScreen>
   {
     UserPrefrences().setUserName("");
     UserPrefrences().setPassword("");
-
-    await _checkLogin();
+    await checkLogin();
   }
   // #endregion
 
   // #region checkLogin
-  _checkLogin() async
-  {
-    _getStorage();
-    await getUser().then
-    (
-      (value) => listUser =
-        value.where
-        (
-          (element) => element.username == _username && element.password == _password //get all list and then check account to login
-        ).toList()
-    ).whenComplete(()  
-    {
-      if( listUser != null && listUser.length !=0)
-      {
-        setState(() 
-        {
-          isLogin = true;
-        });
-      }
-      else
-      {
-        setState(() 
-        {
-          isLogin = false;  
-        });
-      }
-      _isLoading = false;
-    });
-    
-  }
+  // _checkLogin() async
+  // {
+  //   _getStorage();
+  //   await getUser().then
+  //   (
+  //     (value) => listUser =
+  //       value.where
+  //       (
+  //         (element) => element.username == _username && element.password == _password //get all list and then check account to login
+  //       ).toList()
+  //   ).whenComplete(()  
+  //   {
+  //     if( listUser != null && listUser.length !=0)
+  //     {
+  //       setState(() 
+  //       {
+  //         isLogin = true;
+  //       });
+  //     }
+  //     else
+  //     {
+  //       setState(() 
+  //       {
+  //         isLogin = false;  
+  //       });
+  //     }
+  //     _isLoading = false;
+  //   });
+  //   
+  // }
   // #endregion
 
   @override
@@ -104,18 +119,24 @@ class _UserScreen extends State<UserScreen>
         title: new Text('Food Shop tutorial'),
       ),
 
-      body: _isLoading == true
+      body: isLoading == true
       ? Center(child: CircularProgressIndicator(),)
       : Material
       (
-        child:isLogin ==true 
+        child:this.widget.isLogin ==true 
 
         ? Profile
         (
-          listUser : listUser,
-          logout : () async=>
+          listUser : this.widget.listUser,
+          logout : () async
           {
-            await _logout() 
+            await _logout().whenComplete(() async
+            {
+              setState(() =>
+              {
+                isLogin = this.widget.isLogin
+              });
+            }) ;
           },
           size: size,
         )
@@ -141,15 +162,28 @@ class _UserScreen extends State<UserScreen>
                     context: context,
                     builder: (BuildContext context)
                     {
-                      return Login(isLogin: isLogin,);
+                      return Login
+                      (
+                        isLogin: isLogin,
+                        checkLogin : () async
+                        {
+                          await this.widget.checkLogin();
+                          setState(() =>
+                          {
+                            isLogin = this.widget.isLogin
+                          });
+                          
+                        } 
+                      );
                     }
-                  ).then
-                  (
-                    (value) async =>
+                  ).whenComplete(() async
+                  {
+                    await this.widget.checkLogin();
+                    setState(() 
                     {
-                      await _checkLogin()
-                    }
-                  );
+                      isLogin = this.widget.isLogin;
+                    });
+                  });
                 },
                 child: Text("login"),
               )

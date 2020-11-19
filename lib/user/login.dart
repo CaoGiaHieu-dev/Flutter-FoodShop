@@ -9,15 +9,17 @@ import 'package:foodshop/user/components/userpreferences.dart';
 class Login extends StatefulWidget
 {
   final bool isLogin ;
+  final Function checkLogin;
   Login
   (
     {
       Key key ,
-      this.isLogin
+      this.isLogin,
+      this.checkLogin
     }
   ) : super (key: key);
   @override
-  _Login createState() => _Login(isLogin);
+  _Login createState() => _Login(isLogin,checkLogin);
 }
 
 class _Login extends State<Login>
@@ -28,10 +30,11 @@ class _Login extends State<Login>
   String _username ;
   String _password ;
   Future<List<User>> listUser;
+  Function checkLogin;
 
   
   bool isLogin ;
-  _Login(isLogin);
+  _Login(this.isLogin,this.checkLogin);
   // #endregion
 
   // #region State
@@ -39,6 +42,7 @@ class _Login extends State<Login>
   void initState()
   {
     super.initState();
+    // checkLogin();
     listUser = getUser();
     _username="";
     _password="";
@@ -207,7 +211,8 @@ class _Login extends State<Login>
               (
                 onTap: () async 
                 {
-                  await  _checkUser();
+                  await _checkUser();
+                  await  this.widget.checkLogin();
                   setState(() =>
                   {
                     if(isLogin==true)

@@ -103,9 +103,13 @@ class _MainScreens extends State<MainScreens>
         ),
         UserScreen
         (
-          // listUser : listUser,
-          // isLogin: isLogin,
-          // checkLogin : _checkLogin()
+          listUser : listUser,
+          isLogin: isLogin,
+          checkLogin : () => 
+          {
+            _checkLogin()
+          },
+          isLoading : _isLoading
         ),
       ];
     });
@@ -130,9 +134,13 @@ class _MainScreens extends State<MainScreens>
       ),
       UserScreen
       (
-        // listUser : listUser,
-        // isLogin: isLogin,
-        // checkLogin : _checkLogin()
+        listUser : listUser,
+        isLogin: isLogin,
+        checkLogin : () =>
+        {
+          _checkLogin(),
+        } ,
+        isLoading : _isLoading
       ),
     ];
     
