@@ -2,29 +2,31 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodshop/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget
 {
   final List<User> listUser ;
+  final Function logout;
   final Size size;
   Profile
   (
     {
       Key key , 
       this.listUser,
+      this.logout,
       this.size
     }
   ) : super(key: key);
   @override
-  _Profile createState() => _Profile(listUser,size);
+  _Profile createState() => _Profile(listUser,size,logout);
 }
 
 class _Profile extends State<Profile>
 {
   List<User> listUser ;
   Size size;
-  _Profile(this.listUser,this.size);
+  Function logout;
+  _Profile(this.listUser,this.size,this.logout);
 
   @override
   void initState()
@@ -32,11 +34,6 @@ class _Profile extends State<Profile>
     super.initState();
   }
   
-  _logout() async
-  {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
-  }
   @override
   Widget build(BuildContext context)
   {
@@ -269,7 +266,7 @@ class _Profile extends State<Profile>
               {
                 setState(() =>
                 {
-                  _logout()
+                  logout(),
                 });
               },
               child: Text

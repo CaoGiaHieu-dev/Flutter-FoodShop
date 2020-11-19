@@ -42,7 +42,16 @@ class _UserScreen extends State<UserScreen>
     _username = UserPrefrences().getUserName; //get storage username
     _password = UserPrefrences().getPassword; //get storage password
   }
+  // #endregion
 
+  // #region Logout
+  _logout() async
+  {
+    UserPrefrences().setUserName("");
+    UserPrefrences().setPassword("");
+
+    await _checkLogin();
+  }
   // #endregion
 
   // #region checkLogin
@@ -94,7 +103,7 @@ class _UserScreen extends State<UserScreen>
         centerTitle: true,
         title: new Text('Food Shop tutorial'),
       ),
-      
+
       body: _isLoading == true
       ? Center(child: CircularProgressIndicator(),)
       : Material
@@ -104,6 +113,10 @@ class _UserScreen extends State<UserScreen>
         ? Profile
         (
           listUser : listUser,
+          logout : () async=>
+          {
+            await _logout() 
+          },
           size: size,
         )
 
