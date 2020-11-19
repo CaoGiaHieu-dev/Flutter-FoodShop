@@ -124,6 +124,8 @@ class _MainScreens extends State<MainScreens>
     _isLoading = true;
     _getStorage();
     _checkLogin();
+    
+    // reload screens
     listScreens = 
     [
       HomeScreen(),
