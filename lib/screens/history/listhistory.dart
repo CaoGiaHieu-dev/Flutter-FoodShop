@@ -12,22 +12,25 @@ import 'package:intl/intl.dart';
 class ListHistory extends StatefulWidget
 {
   final Size size;
-  
+  final String userId;
   ListHistory
   (
     {
       Key key,
       this.size,
+      this.userId
     }
   ) : super (key : key );
   @override
-  _ListHistory createState() => _ListHistory(size);
+  _ListHistory createState() => _ListHistory(size,userId);
 }
 
 class _ListHistory extends State<ListHistory>
 {
   Size size;
-  _ListHistory(this.size);
+  String userId;
+  _ListHistory(this.size,this.userId);
+
   
   Future<List<Cart>> _listCart ;    
 
@@ -106,6 +109,7 @@ class _ListHistory extends State<ListHistory>
             {
               if(snapshot.hasData && snapshot.connectionState==ConnectionState.done)
               {
+                snapshot.data.where( (element) => element.userId == userId).toList();
                 snapshot.data.sort((a,b) => int.parse(b.createAt).compareTo(int.parse(a.createAt)));  //sort by create at time
                 var _group = groupBy(snapshot.data, (obj) => (obj as Cart).createAt); // group history
                 

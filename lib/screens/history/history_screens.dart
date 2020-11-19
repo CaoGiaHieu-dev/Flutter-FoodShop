@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/history/listhistory.dart';
 import '../appbar.dart';
 import '../header.dart';
@@ -9,8 +10,18 @@ import '../header.dart';
 
 class HistoryScreen extends StatefulWidget
 {
+  final bool isLogin;
+  final List<User> listUser;
+  HistoryScreen
+  (
+    {
+      Key key,
+      @required this.isLogin,
+      @required this.listUser,
+    }
+  ) : super (key: key) ;
   @override
-  _HistoryScreen createState() => _HistoryScreen();
+  _HistoryScreen createState() => _HistoryScreen(isLogin,listUser);
 }
 
 class _HistoryScreen extends State<HistoryScreen>
@@ -18,9 +29,11 @@ class _HistoryScreen extends State<HistoryScreen>
   
   // #region property
   GlobalKey<ScaffoldState> _scaffold = GlobalKey();
+  bool isLogin ;
+  List<User> listUser;
   // #endregion
   // #region Appbar custom
-  _HistoryScreen() 
+  _HistoryScreen(this.isLogin,this.listUser) 
   {
     searchBar = new SearchBar
     (
@@ -76,10 +89,19 @@ class _HistoryScreen extends State<HistoryScreen>
                       ),
                     ),
                   ),
-                  ListHistory
+                  isLogin == true
+                  ? ListHistory
                   (
                     size: size,
-                  ),
+                    userId : listUser.first.id,
+                  )
+                  : Center
+                  (
+                    child: Text
+                    (
+                      "you wasn't login"
+                    ),
+                  )
                 ],
               ),
             )

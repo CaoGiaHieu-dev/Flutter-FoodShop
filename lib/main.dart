@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foodshop/components/checkLogin.dart';
 import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/history/history_screens.dart';
 import 'package:foodshop/user/components/userpreferences.dart';
 import 'package:foodshop/user/user_screen.dart';
+import 'components/user.dart';
 import 'screens/home/home_screen.dart';
 
 void main() async
@@ -41,21 +44,98 @@ class MainScreens extends StatefulWidget
 
 class _MainScreens extends State<MainScreens>
 {
-  List<Widget> originalList;
-  Map<int, bool> originalDic;
+  // #region Property
   List<Widget> listScreens = [];
-  List<int> listScreensIndex;
   int tabIndex = 0;
+
+  //login values
+  List<User> listUser;
+  String _username;
+  String _password;
+  bool isLogin;
+  bool _isLoading;
+  // #endregion 
+
+  // #region get Storage Data
+  _getStorage()
+  {
+    _username = UserPrefrences().getUserName; //get storage username
+    _password = UserPrefrences().getPassword; //get storage password
+  }
+  // #endregion
+ 
+  // #region checkLogin
+  _checkLogin() async
+  {
+    _getStorage();
+    await getUser().then
+    (
+      (value) => listUser =
+        value.where
+        (
+          (element) => element.username == _username && element.password == _password //get all list and then check account to login
+        ).toList()
+    ).whenComplete(()  
+    {
+      if( listUser != null && listUser.length !=0)
+      {
+        setState(() 
+        {
+          isLogin = true;
+        });
+      }
+      else
+      {
+        setState(() 
+        {
+          isLogin = false;  
+        });
+      }
+      _isLoading = false;
+
+      listScreens = 
+      [
+        HomeScreen(),
+        HistoryScreen
+        (
+          isLogin: isLogin,
+          listUser : listUser,
+        ),
+        UserScreen
+        (
+          // listUser : listUser,
+          // isLogin: isLogin,
+          // checkLogin : _checkLogin()
+        ),
+      ];
+    });
+    
+  }
+  // #endregion
+
   @override
   void initState() 
   {
     super.initState();
+    _isLoading = true;
+    _getStorage();
+    _checkLogin();
     listScreens = 
     [
       HomeScreen(),
-      HistoryScreen(),
-      UserScreen(),
+      HistoryScreen
+      (
+        isLogin: isLogin,
+        listUser : listUser,
+      ),
+      UserScreen
+      (
+        // listUser : listUser,
+        // isLogin: isLogin,
+        // checkLogin : _checkLogin()
+      ),
     ];
+    
   }
 
   @override
@@ -63,14 +143,20 @@ class _MainScreens extends State<MainScreens>
   {
     return Scaffold
     (
-      body: listScreens[tabIndex],
+      body: _isLoading == false  
+      ? CheckLogin
+        (
+          isLogin: isLogin, 
+          child: listScreens[tabIndex]
+        )
+      : Center(child: CircularProgressIndicator(),),
       bottomNavigationBar: BottomNavigationBar
       (
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[400],
         backgroundColor: kMainColor,
         currentIndex: tabIndex,
-        onTap: (int index) 
+        onTap: (int index)
         {
           setState(() 
           {
