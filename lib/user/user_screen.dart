@@ -29,20 +29,26 @@ class _UserScreen extends State<UserScreen>
   void initState()
   {
     super.initState();
-    _username = UserPrefrences().getUserName; //get storage username
-    _password = UserPrefrences().getPassword; //get storage password
+    
     _isLoading = true;
-
-    
+    _getStorage();
     _checkLogin();
-    
-    
   }
   // #endregion
   
+  // #region get Storage Data
+  _getStorage()
+  {
+    _username = UserPrefrences().getUserName; //get storage username
+    _password = UserPrefrences().getPassword; //get storage password
+  }
+
+  // #endregion
+
   // #region checkLogin
   _checkLogin() async
   {
+    _getStorage();
     await getUser().then
     (
       (value) => listUser =
@@ -87,7 +93,6 @@ class _UserScreen extends State<UserScreen>
         //tittle
         centerTitle: true,
         title: new Text('Food Shop tutorial'),
-    //Action        
       ),
       body: _isLoading == true
       ? Center(child: CircularProgressIndicator(),)
@@ -126,11 +131,9 @@ class _UserScreen extends State<UserScreen>
                     }
                   ).then
                   (
-                    (value) 
+                    (value) async =>
                     {
-                      setState(() =>
-                      {
-                      });
+                      await _checkLogin()
                     }
                   );
                 },

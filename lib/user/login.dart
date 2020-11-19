@@ -5,7 +5,6 @@ import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/user.dart';
 import 'package:foodshop/models/user.dart';
 import 'package:foodshop/user/components/userpreferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget
 {
@@ -206,16 +205,16 @@ class _Login extends State<Login>
               //button
               GestureDetector
               (
-                onTap: () 
+                onTap: () async 
                 {
+                  await  _checkUser();
                   setState(() =>
                   {
-                     _checkUser(),
                     if(isLogin==true)
                     {
                       UserPrefrences().setUserName(_username),
                       UserPrefrences().setPassword(_password),
-                      Navigator.pop(context,isLogin)
+                      Navigator.pop(context)
                     }
                     else
                     {
