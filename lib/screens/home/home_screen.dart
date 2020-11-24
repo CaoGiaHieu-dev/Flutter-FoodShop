@@ -14,8 +14,6 @@ import 'package:foodshop/screens/home/swipeList.dart';
 import 'package:foodshop/screens/home/titleItems.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
-import '../appbar.dart';
 import '../header.dart';
 
 
@@ -50,16 +48,22 @@ class _HomeSceen extends State<HomeScreen>
   
   // #endregion
   // #region Appbar custom
-  _HomeSceen() 
-  {
-    searchBar = new SearchBar
-    (
-      inBar: false,
-      setState: setState,
-      onSubmitted: print,
-      buildDefaultAppBar: appbar
-    );
-  }
+//   _HomeSceen() 
+//   {
+//     searchBar = new SearchBar
+//     (
+//       inBar: false,
+//       setState: setState,
+//       onSubmitted: _searchProduct,
+//       buildDefaultAppBar: appbar,
+//       hintText: "Search by name"
+//     );
+//   }
+// 
+//   _searchProduct(String value) async
+//   {
+//     print(value);
+//   }
   // #endregion
   // #region StateFAB
   // #region getBaner
@@ -169,8 +173,17 @@ class _HomeSceen extends State<HomeScreen>
     //Start coding ...
     return new Scaffold
     (
-      appBar:searchBar.build(context),
-
+      //appBar:searchBar.build(context),
+      appBar: AppBar
+      (
+         //Style
+        backgroundColor: kMainColor,
+        elevation: 0,
+        
+        //tittle
+        centerTitle: true,
+        title: new Text('Food Shop tutorial'),
+      ),
       key: _scaffold,
       floatingActionButton: fab,
 

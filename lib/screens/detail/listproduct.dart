@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/products.dart';
@@ -11,13 +12,15 @@ class ListDetailProduct extends StatefulWidget
   final Size size;
   final Future<List<Products>> listProduct;
   final Function presstoload;
+  final String searchText;
   ListDetailProduct
   (
     {
       Key key,
       this.size,
       this.listProduct,
-      this.presstoload
+      this.presstoload,
+      this.searchText
     }
   ) : super (key : key );
   @override
@@ -31,7 +34,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
   Function presstoload;
   _ListDetailProduct(this.size,this.listProduct,this.presstoload);
   
-  List<Products> temp = cartList;   
+  List<Products> temp = cartList;
 
   @override
   Widget build(BuildContext context)
@@ -42,10 +45,28 @@ class _ListDetailProduct extends State<ListDetailProduct>
       (
         initialData: [],
         future: this.widget.listProduct,
-        builder: (context, snapshot) 
+        builder: (context, AsyncSnapshot snapshot) 
         {
           if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
           {
+            List<Products> templist =[];
+            if(this.widget.searchText !=  "")
+            {
+              snapshot.data.forEach
+              (
+                (values)
+                {
+                  if( values.name.contains(this.widget.searchText) == true )
+                  {
+                    templist.add(values);
+                  }
+                }
+              );
+            }
+            else
+            {
+              templist = snapshot.data;
+            }
             return ListView
             (
               shrinkWrap: true,
@@ -53,7 +74,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
               physics: NeverScrollableScrollPhysics(),
               children: <Widget>
               [
-                for( int i =0 ; i < snapshot.data.length ; i ++)
+                for( int i =0 ; i < templist.length  ; i ++)
                   GestureDetector
                   (
                     onTap: () => 
@@ -71,9 +92,11 @@ class _ListDetailProduct extends State<ListDetailProduct>
                               child: CardItems
                               (
                                 key: UniqueKey(),
-                                foodSnap: snapshot,
-                                index: i,
-                                //press:  presstoload(),
+                                product: templist[i],
+                                press: () =>
+                                {
+                                  presstoload()
+                                } 
                               ),
                             ),
                           );
@@ -98,10 +121,16 @@ class _ListDetailProduct extends State<ListDetailProduct>
                         children: <Widget>
                         [
                           //image
-                          Image.network
+                          // Image.network
+                          // (
+                          //   snapshot.data[i].image,
+                          //   height: 120 ,
+                          //   width: 100,
+                          // ),
+                          CachedNetworkImage
                           (
-                            snapshot.data[i].image,
-                            height: 120 ,
+                            imageUrl: templist[i].image,
+                            height: 120,
                             width: 100,
                           ),
                           Spacer(),
@@ -112,7 +141,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                             alignment: Alignment.center,
                             child: Text
                             (
-                              ( double.parse( snapshot.data[i].price ) *getItemInCart(int.parse(snapshot.data[i].id)) ).toString(),
+                              ( double.parse( templist[i].price ) *getItemInCart(int.parse(templist[i].id)) ).toString(),
                               style: TextStyle
                               (
                                 color: Colors.white
@@ -151,7 +180,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                                       {
                                         setState(() =>
                                         {
-                                          addtoCart(snapshot.data[i]),
+                                          addtoCart(templist[i]),
                                           presstoload()
                                         });
                                       },
@@ -176,7 +205,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                                     ),
                                     child: Text
                                     (
-                                      getItemInCart(int.parse(snapshot.data[i].id)).toString(),
+                                      getItemInCart(int.parse(templist[i].id)).toString(),
                                       style: TextStyle
                                       (
                                         color: Colors.white,
@@ -199,7 +228,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                                       { 
                                         setState(() =>
                                         {
-                                          removefromcart(int.parse(snapshot.data[i].id)),
+                                          removefromcart(int.parse(templist[i].id)),
                                           presstoload()
                                         });
                                       },
