@@ -3,6 +3,7 @@ import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -11,11 +12,15 @@ import 'package:hexcolor/hexcolor.dart';
 class Info extends StatefulWidget
 {
   final Size size;
+  final List<User> listUser;
+  final bool isLogin;
   Info
   (
     {
       Key key,
       this.size,
+      @required this.isLogin,
+      @required this.listUser,
     }
   ) : super ( key: key);
 
@@ -77,7 +82,9 @@ class _Info extends State<Info>
     if(_isLoading)
       return AlertDialog (content: CircularProgressIndicator(),);
     else
-      return AlertDialog
+      return this.widget.isLogin== false
+      ? AlertDialog (content: Text("you wasn't Login"),) 
+      : AlertDialog
       (
         actions: <Widget>
         [
@@ -92,22 +99,45 @@ class _Info extends State<Info>
                 {
                   postCart
                   (
-                    _dateTime.toString(),
-                    getItemInCart(int.parse(cartList[i].id)), 
-                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ), 
-                    "1", 
-                    cartList[i].id.toString(),
-                    phoneNumber,
-                    address
-                  );
+                    _dateTime.toString(), //get time payment
+                    getItemInCart(int.parse(cartList[i].id)), //count number of product in Cart 
+                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ),  //get total price of product 
+                    this.widget.listUser.first.id,  //get User id
+                    cartList[i].id.toString(),  //get Product id
+                    phoneNumber,  //get PhoneNumber on input
+                    address //get Address on input
+                  ).whenComplete(() => 
+                  {
+                    showDialog
+                    (
+                      context: context,
+                      builder: (BuildContext context)
+                      {
+                        return AlertDialog
+                        (
+                          actions: 
+                          [
+                            RaisedButton
+                            (
+                              onPressed: ()
+                              {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(Icons.close),
+                            )
+                          ],
+                        );
+                      }
+                    )
+                  });
                 }
-                SnackBar
-                (
-                  content: Text
-                  (
-                    "Success",
-                  ),
-                );
+                // SnackBar
+                // (
+                //   content: Text
+                //   (
+                //     "Success",
+                //   ),
+                // );
                 setState(() =>
                 {
                   cartList.clear(),

@@ -1,22 +1,27 @@
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/detail/detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-// ignore: must_be_immutable
+
 class TitleItems extends StatefulWidget
 {
   final Future<List<Products>> listProduct;
   final String banner;
-  Function callbackreload;
+  final Function callbackreload;
+  final bool isLogin;
+  final List<User> listUser;
   TitleItems
   (
     {
       Key key,
       @required this.listProduct,
       @required this.banner,
-      this.callbackreload
+      this.callbackreload,
+      @required this.isLogin,
+      @required this.listUser
     }
   ) : super (key : key);
   @override
@@ -75,6 +80,8 @@ class _TittleItems extends State<TitleItems>
                           (
                             banner : this.widget.banner,
                             listProduct :this.widget.listProduct,
+                            isLogin: this.widget.isLogin,
+                            listUser: this.widget.listUser,
                             key: UniqueKey(),
                           ),
                         )

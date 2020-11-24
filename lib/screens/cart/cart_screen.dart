@@ -2,6 +2,7 @@
 
 import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/components/constants.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/cart/components/getupdatelistCart.dart';
 import 'package:foodshop/screens/cart/payment.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,18 @@ import 'listcart.dart';
 
 class CartScreen extends StatefulWidget
 {
+  final bool isLogin;
+  final List<User> listUser;
+
+  CartScreen
+  (
+    {
+      Key key,
+      @required this.isLogin,
+      @required this.listUser,
+    }
+  ) : super (key: key);
+
   @override
   _CartScreen createState() => _CartScreen();
 }
@@ -87,6 +100,8 @@ class _CartScreen extends State<CartScreen>
                 Payment
                 (
                   size: size,
+                  isLogin : this.widget.isLogin,
+                  listUser : this.widget.listUser
                 )
               ],
             )

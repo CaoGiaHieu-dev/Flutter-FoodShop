@@ -95,7 +95,11 @@ class _MainScreens extends State<MainScreens>
 
       listScreens = 
       [
-        HomeScreen(),
+        HomeScreen
+        (
+          listUser: listUser,
+          isLogin : isLogin,
+        ),
         HistoryScreen
         (
           isLogin: isLogin,
@@ -128,7 +132,11 @@ class _MainScreens extends State<MainScreens>
     // reload screens
     listScreens = 
     [
-      HomeScreen(),
+      HomeScreen
+      (
+        listUser: listUser,
+        isLogin : isLogin,  
+      ),
       HistoryScreen
       (
         isLogin: isLogin,

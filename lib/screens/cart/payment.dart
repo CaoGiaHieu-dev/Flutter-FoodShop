@@ -1,6 +1,7 @@
 
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/cart.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/cart/info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,15 @@ import 'package:hexcolor/hexcolor.dart';
 class Payment extends StatefulWidget
 {
   final Size size ;
+  final bool isLogin;
+  final List<User> listUser;
   Payment
   (
     {
       Key key,
-      this.size
+      this.size,
+      @required this.isLogin,
+      @required this.listUser
     }
   ) : super ( key : key);
   @override
@@ -88,6 +93,8 @@ class _Payment extends State<Payment>
             return Info
             (
               size: size,
+              isLogin : this.widget.isLogin,
+              listUser : this.widget.listUser
             );
           }
         ).then

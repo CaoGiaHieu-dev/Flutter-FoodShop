@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/cart/cart_screen.dart';
 import 'package:foodshop/screens/detail/listproduct.dart';
 
@@ -14,11 +15,14 @@ class MainDetail extends StatefulWidget
 {
   final String banner;
   final Future<List<Products>> listProduct;
-
+  final List<User> listUser;
+  final bool isLogin;
   MainDetail
   (
     {
       Key key,
+      @required this.isLogin,
+      @required this.listUser,
       @required this.banner,
       @required this.listProduct
     }
@@ -68,7 +72,11 @@ class _MainDetail extends State<MainDetail>
           ( 
             context, MaterialPageRoute
             ( 
-              builder: (context) => CartScreen()
+              builder: (context) => CartScreen
+              (
+                isLogin: this.widget.isLogin,
+                listUser: this.widget.listUser,
+              )
             ), 
           ).then
           (

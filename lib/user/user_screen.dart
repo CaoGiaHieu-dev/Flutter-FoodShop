@@ -33,8 +33,8 @@ class _UserScreen extends State<UserScreen>
   // #region property
   bool isLogin ;
   List<User> listUser;
-  String _username;
-  String _password;
+  // String _username;
+  // String _password;
   bool isLoading;
   Function checkLogin;
   // #endregion

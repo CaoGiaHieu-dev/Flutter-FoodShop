@@ -5,6 +5,7 @@ import 'package:foodshop/components/Products.dart';
 import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/cart/cart_screen.dart';
 import 'package:foodshop/screens/home/components/getupdateProducts.dart';
 import 'package:foodshop/screens/home/components/getupdateTitleItems.dart';
@@ -20,6 +21,17 @@ import '../header.dart';
 
 class HomeScreen extends StatefulWidget
 {
+  final bool isLogin ;
+  final List<User> listUser;
+
+  HomeScreen
+  (
+    {
+      Key key,
+      @required this.isLogin,
+      @required this.listUser,
+    }
+  ) : super (key: key);
   @override
   _HomeSceen createState() => _HomeSceen();
 }
@@ -28,6 +40,7 @@ class _HomeSceen extends State<HomeScreen>
 {
   
   // #region property
+
   String categoryId;
   Future<List<Category>> listcategories ;
   Future<List<Products>> listproducts ;
@@ -96,7 +109,11 @@ class _HomeSceen extends State<HomeScreen>
           ( 
             context, MaterialPageRoute
             ( 
-              builder: (context) => CartScreen()
+              builder: (context) => CartScreen
+              (
+                isLogin : this.widget.isLogin,
+                listUser: this.widget.listUser
+              )
             ), 
           ).then
           (
@@ -130,6 +147,7 @@ class _HomeSceen extends State<HomeScreen>
   void initState()
   {
     listcategories = getCategories();
+    detailbaner = _detailbaner();
 
     if(categoryId == null || categoryId =="" )
     {
@@ -194,7 +212,9 @@ class _HomeSceen extends State<HomeScreen>
                       callbackreload: ()  =>
                       {
                         _fabChange(),
-                      } 
+                      } ,
+                      isLogin: this.widget.isLogin,
+                      listUser: this.widget.listUser,
                     ),
                   ),
                   FutureBuilder
