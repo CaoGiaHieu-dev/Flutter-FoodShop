@@ -106,30 +106,7 @@ class _Info extends State<Info>
                     cartList[i].id.toString(),  //get Product id
                     phoneNumber,  //get PhoneNumber on input
                     address //get Address on input
-                  ).whenComplete(() => 
-                  {
-                    showDialog
-                    (
-                      context: context,
-                      builder: (BuildContext context)
-                      {
-                        return AlertDialog
-                        (
-                          actions: 
-                          [
-                            RaisedButton
-                            (
-                              onPressed: ()
-                              {
-                                Navigator.pop(context);
-                              },
-                              child: Icon(Icons.close),
-                            )
-                          ],
-                        );
-                      }
-                    )
-                  });
+                  );
                 }
                 // SnackBar
                 // (

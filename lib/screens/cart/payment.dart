@@ -106,7 +106,34 @@ class _Payment extends State<Payment>
               
             });
           }
-        );
+        ).whenComplete(() => 
+        {
+          showDialog
+          (
+            context: context,
+            builder: (BuildContext context)
+            {
+              return AlertDialog
+              (
+                actions: 
+                [
+                  RaisedButton
+                  (
+                    onPressed: ()
+                    {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.close),
+                  )
+                ],
+                content: Text
+                (
+                  "Payment Succecss"
+                ),
+              );
+            }
+          )
+        });
       },
       child : Container
       (
