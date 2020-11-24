@@ -1,3 +1,4 @@
+
 import 'package:foodshop/models/products.dart';
 import 'package:foodshop/screens/home/carditem.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,6 +77,33 @@ class _ListItems extends State<ListItems>
                     (
                       onTap: () => 
                       {
+                        showDialog
+                        (
+                          context: context,
+                          builder: (BuildContext context)
+                          {
+                            return AlertDialog
+                            (
+                              content: Container
+                              (
+                                height: size.height *0.5,
+                                child: CardItems
+                                (
+                                  key: UniqueKey(),
+                                  foodSnap: foodSnap,
+                                  index: i,
+                                  press: press,
+                                ),
+                              ),
+                            );
+                          }
+                        ).then((value)  
+                        {
+                          setState(() 
+                          {
+                            
+                          });
+                        })
                       },
                       child: CardItems
                       (

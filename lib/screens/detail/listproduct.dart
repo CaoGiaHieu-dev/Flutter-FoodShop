@@ -4,6 +4,7 @@ import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/screens/home/carditem.dart';
 
 class ListDetailProduct extends StatefulWidget
 {
@@ -53,78 +54,129 @@ class _ListDetailProduct extends State<ListDetailProduct>
               children: <Widget>
               [
                 for( int i =0 ; i < snapshot.data.length ; i ++)
-                  Card
+                  GestureDetector
                   (
-                    shape: BeveledRectangleBorder
-                    (
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: kMainColor,
-                    child: Row
-                    (
-                      children: <Widget>
-                      [
-                        //image
-                        Image.network
-                        (
-                          snapshot.data[i].image,
-                          height: 120 ,
-                          width: 100,
-                        ),
-                        Spacer(),
-
-                        //total price
-                        Align
-                        (
-                          alignment: Alignment.center,
-                          child: Text
+                    onTap: () => 
+                    {
+                      showDialog
+                      (
+                        context: context,
+                        builder: (BuildContext context)
+                        {
+                          return AlertDialog
                           (
-                            ( double.parse( snapshot.data[i].price ) *getItemInCart(int.parse(snapshot.data[i].id)) ).toString(),
-                            style: TextStyle
+                            content: Container
                             (
-                              color: Colors.white
+                              height: size.height *0.5,
+                              child: CardItems
+                              (
+                                key: UniqueKey(),
+                                foodSnap: snapshot,
+                                index: i,
+                                //press:  presstoload(),
+                              ),
+                            ),
+                          );
+                        }
+                      ).then((value)  
+                      {
+                        setState(() 
+                        {
+                          
+                        });
+                      })
+                    },
+                    child: Card
+                    (
+                      shape: BeveledRectangleBorder
+                      (
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      color: kMainColor,
+                      child: Row
+                      (
+                        children: <Widget>
+                        [
+                          //image
+                          Image.network
+                          (
+                            snapshot.data[i].image,
+                            height: 120 ,
+                            width: 100,
+                          ),
+                          Spacer(),
+
+                          //total price
+                          Align
+                          (
+                            alignment: Alignment.center,
+                            child: Text
+                            (
+                              ( double.parse( snapshot.data[i].price ) *getItemInCart(int.parse(snapshot.data[i].id)) ).toString(),
+                              style: TextStyle
+                              (
+                                color: Colors.white
+                              ),
                             ),
                           ),
-                        ),
-                        Spacer(),
+                          Spacer(),
 
-                        //right conner
-                        Align
-                        (
-                          alignment: Alignment.centerRight,
-                          child: Container
+                          //right conner
+                          Align
                           (
-                            padding: EdgeInsets.only
+                            alignment: Alignment.centerRight,
+                            child: Container
                             (
-                              left: 10,
-                              right: 10
-                            ),
-                            child: Row
-                            (
-                              children: <Widget>
-                              [
-                                //plus
-                                SizedBox
-                                (
-                                  width: size.width *0.1,
-                                  child: RaisedButton
+                              padding: EdgeInsets.only
+                              (
+                                left: 10,
+                                right: 10
+                              ),
+                              child: Row
+                              (
+                                children: <Widget>
+                                [
+                                  //plus
+                                  SizedBox
                                   (
-                                    color: kButtonColor,
-                                    shape: RoundedRectangleBorder
+                                    width: size.width *0.1,
+                                    child: RaisedButton
                                     (
-                                      borderRadius: BorderRadius.circular(100)
-                                    ),
-                                    onPressed: () 
-                                    {
-                                      setState(() =>
+                                      color: kButtonColor,
+                                      shape: RoundedRectangleBorder
+                                      (
+                                        borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      onPressed: () 
                                       {
-                                        addtoCart(snapshot.data[i]),
-                                        presstoload()
-                                      });
-                                    },
+                                        setState(() =>
+                                        {
+                                          addtoCart(snapshot.data[i]),
+                                          presstoload()
+                                        });
+                                      },
+                                      child: Text
+                                      (
+                                        "+",
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 25
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // count in cart
+                                  Container
+                                  (
+                                    padding: EdgeInsets.only
+                                    (
+                                      left: 10,
+                                      right: 10
+                                    ),
                                     child: Text
                                     (
-                                      "+",
+                                      getItemInCart(int.parse(snapshot.data[i].id)).toString(),
                                       style: TextStyle
                                       (
                                         color: Colors.white,
@@ -132,62 +184,45 @@ class _ListDetailProduct extends State<ListDetailProduct>
                                       ),
                                     ),
                                   ),
-                                ),
-                                // count in cart
-                                Container
-                                (
-                                  padding: EdgeInsets.only
+                                  //remove
+                                  SizedBox
                                   (
-                                    left: 10,
-                                    right: 10
-                                  ),
-                                  child: Text
-                                  (
-                                    getItemInCart(int.parse(snapshot.data[i].id)).toString(),
-                                    style: TextStyle
+                                    width: size.width *0.1,
+                                    child: RaisedButton
                                     (
-                                      color: Colors.white,
-                                      fontSize: 25
-                                    ),
-                                  ),
-                                ),
-                                //remove
-                                SizedBox
-                                (
-                                  width: size.width *0.1,
-                                  child: RaisedButton
-                                  (
-                                    color: kButtonColor,
-                                    shape: RoundedRectangleBorder
-                                    (
-                                      borderRadius: BorderRadius.circular(100)
-                                    ),
-                                    onPressed: () 
-                                    { 
-                                      setState(() =>
-                                      {
-                                        removefromcart(int.parse(snapshot.data[i].id)),
-                                        presstoload()
-                                      });
-                                    },
-                                    child: Text
-                                    (
-                                      "-",
-                                      style: TextStyle
+                                      color: kButtonColor,
+                                      shape: RoundedRectangleBorder
                                       (
-                                        color: Colors.white,
-                                        fontSize: 25
+                                        borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      onPressed: () 
+                                      { 
+                                        setState(() =>
+                                        {
+                                          removefromcart(int.parse(snapshot.data[i].id)),
+                                          presstoload()
+                                        });
+                                      },
+                                      child: Text
+                                      (
+                                        "-",
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 25
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ]
-                            ),
+                                ]
+                              ),
+                            )
                           )
-                        )
-                      ],
-                    ),
+                        ],
+                      ),
+                    )
                   )
+                  
               ]
             );
           }
