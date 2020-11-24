@@ -36,6 +36,15 @@ class _MainDetail extends State<MainDetail>
 
   GlobalKey<ScaffoldState> _scaffold = GlobalKey();
 
+  // #region State
+  void initState()
+  {
+    super.initState();
+
+    _searchText ="";
+  }
+  // #endregion
+
   // #region StateFAB
   Widget fab = FloatingActionButton.extended
   (
@@ -106,16 +115,26 @@ class _MainDetail extends State<MainDetail>
   }
   
   // #endregion
+
+  // #region SeachBar
+  String _searchText;
   _MainDetail(banner,listProduct)
   {
     searchBar = new SearchBar
     (
       inBar: false,
       setState: setState,
-      onSubmitted: print,
+      onSubmitted: _getSeachtext,
       buildDefaultAppBar: appbar
     );
   }
+
+  _getSeachtext(String value)
+  {
+    _searchText = value ;
+  }
+
+  // #endregion
   @override
   Widget build(BuildContext context)
   {
@@ -166,6 +185,7 @@ class _MainDetail extends State<MainDetail>
                   (
                     size: size,
                     listProduct: this.widget.listProduct,
+                    searchText: _searchText,
                     presstoload : () =>
                     {
                       _fabChange()

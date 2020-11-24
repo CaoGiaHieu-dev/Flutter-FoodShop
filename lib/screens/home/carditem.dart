@@ -2,35 +2,33 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/models/products.dart';
 
 import '../../components/cart.dart';
 
 class CardItems extends StatefulWidget
 {
   final Function press;
-  final AsyncSnapshot<dynamic> foodSnap;
-  final int index;
+  final Products product;
 
   CardItems
   (
     {
       Key key,
-      @required this.foodSnap,
-      @required this.index,
+      @required this.product,
       this.press,
     }
   ) : super (key : key );
 
   @override
-  _CardItems createState() => _CardItems(this.press  , this.foodSnap , this.index);
+  _CardItems createState() => _CardItems(this.press  , this.product );
 }
 
 class _CardItems extends State<CardItems>
 {
   Function press;
-  AsyncSnapshot<dynamic> foodSnap;
-  int index;
-  _CardItems(this.press,this.foodSnap,this.index);
+  Products product;
+  _CardItems(this.press,this.product);
 
   @override
   Widget build(BuildContext context )
@@ -55,7 +53,7 @@ class _CardItems extends State<CardItems>
           [
             CachedNetworkImage
             (
-              imageUrl: foodSnap.data[index].image.toString(),
+              imageUrl: product.image.toString(),
               width: MediaQuery.of(context).size.width -20,
               height: MediaQuery.of(context).size.height * 0.25 - 100,
               alignment: Alignment.center,
@@ -74,7 +72,7 @@ class _CardItems extends State<CardItems>
               alignment: Alignment.center,
               child: Text
               (
-                foodSnap.data[index].price,
+                product.price,
                 style: TextStyle
                 (
                   color: Colors.white,
@@ -116,7 +114,7 @@ class _CardItems extends State<CardItems>
                       {
                         setState(() =>
                         {
-                          addtoCart(foodSnap.data[index]),
+                          addtoCart(product),
                           press()
                         });
                       },
@@ -125,7 +123,7 @@ class _CardItems extends State<CardItems>
                   Spacer(),
                   Text
                   (
-                    getItemInCart(int.parse(foodSnap.data[index].id)).toString(),
+                    getItemInCart(int.parse(product.id)).toString(),
                     style: TextStyle
                     (
                       color: Colors.white,
@@ -160,7 +158,7 @@ class _CardItems extends State<CardItems>
                       {
                         setState(() =>
                         {
-                          removefromcart(int.parse(foodSnap.data[index].id)),
+                          removefromcart(int.parse(product.id)),
                           press()
                         });
                       }
