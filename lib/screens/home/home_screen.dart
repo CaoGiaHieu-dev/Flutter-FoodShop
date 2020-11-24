@@ -150,19 +150,23 @@ class _HomeSceen extends State<HomeScreen>
   @override
   void initState()
   {
-    listcategories = getCategories();
-    detailbaner = _detailbaner();
+    if(mounted)
+    {
+      listcategories = getCategories();
+      detailbaner = _detailbaner();
 
-    if(categoryId == null || categoryId =="" )
-    {
-      listproducts =  getProducts("1","");
-    }
-    else
-    {
-      listproducts = getProducts(categoryId, "");
+      if(categoryId == null || categoryId =="" )
+      {
+        listproducts =  getProducts("1","");
+      }
+      else
+      {
+        listproducts = getProducts(categoryId, "");
+      }
+      
+      super.initState();
     }
     
-    super.initState();
   }
   // #endregion
   
