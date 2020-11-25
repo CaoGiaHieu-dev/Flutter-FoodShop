@@ -1,5 +1,6 @@
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/products.dart';
@@ -179,9 +180,15 @@ class _PopUpHistory extends State<PopUpHistory>
                         children: <Widget>
                         [
                           //image
-                          Image.network
+                          // Image.network
+                          // (
+                          //   _tempProduct[i].image,
+                          //   height: 120 ,
+                          //   width: 100,
+                          // ),
+                          CachedNetworkImage
                           (
-                            _tempProduct[i].image,
+                            imageUrl: _tempProduct[i].image,
                             height: 120 ,
                             width: 100,
                           ),
