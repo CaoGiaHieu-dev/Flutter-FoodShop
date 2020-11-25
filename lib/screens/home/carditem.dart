@@ -8,6 +8,7 @@ import '../../components/cart.dart';
 
 class CardItems extends StatefulWidget
 {
+  final bool isLogin;
   final Function press;
   final Products product;
 
@@ -17,6 +18,7 @@ class CardItems extends StatefulWidget
       Key key,
       @required this.product,
       this.press,
+      @required  this.isLogin
     }
   ) : super (key : key );
 
@@ -35,14 +37,15 @@ class _CardItems extends State<CardItems>
   {
     return Card
     (
+      semanticContainer: true,
       shape: BeveledRectangleBorder
       (
+
         borderRadius: BorderRadius.circular(15.0),
       ),
       color: kMainColor,
       child: Container
       (
-        width: 150,
         decoration: BoxDecoration
         (
           borderRadius: BorderRadius.all(Radius.circular(100))
@@ -80,6 +83,25 @@ class _CardItems extends State<CardItems>
                 ),
               )
             ),
+            Spacer(),
+            this.widget.isLogin
+            ? Align
+            (
+              alignment: Alignment.center,
+              child: GestureDetector
+              (
+                onTap: () 
+                {
+                  
+                },
+                child: Icon
+                (
+                  Icons.favorite,
+                  color: Colors.red
+                ),
+              ),
+            )
+            : SizedBox() ,
             Spacer(),
             Align
             (

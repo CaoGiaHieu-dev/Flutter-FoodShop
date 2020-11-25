@@ -14,6 +14,7 @@ class ListDetailProduct extends StatefulWidget
   final Function presstoload;
   final String searchText;
   final String value;
+  final bool isLogin;
   ListDetailProduct
   (
     {
@@ -22,7 +23,8 @@ class ListDetailProduct extends StatefulWidget
       this.listProduct,
       this.presstoload,
       this.searchText,
-      this.value
+      this.value,
+      @required this.isLogin
     }
   ) : super (key : key );
   @override
@@ -108,6 +110,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                               height: size.height *0.5,
                               child: CardItems
                               (
+                                isLogin: this.widget.isLogin,
                                 key: UniqueKey(),
                                 product: templist[i],
                                 press: () =>

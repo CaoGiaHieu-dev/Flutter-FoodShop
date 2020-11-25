@@ -11,6 +11,7 @@ class ListItems extends StatefulWidget
   final Function press;
   final Future<List<Products>> products;
   final int number;
+  final bool isLogin;
   ListItems
   (
     {
@@ -19,6 +20,7 @@ class ListItems extends StatefulWidget
       this.press,
       @required this.products,
       this.number,
+      @required this.isLogin
     }
   ) : super ( key : key );
   
@@ -42,9 +44,12 @@ class _ListItems extends State<ListItems>
   @override
   Widget build(BuildContext context)
   {
+    var size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 200) / 2;
+    final double itemWidth = size.width / 2;
     return Container
     (
-      height: size.height * 0.8,  
+      height: size.height ,  
       child:  FutureBuilder
       (
         initialData: [],
@@ -63,12 +68,15 @@ class _ListItems extends State<ListItems>
             }
             return GridView
             (
+
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
               (
                 crossAxisCount: 2,
+                 childAspectRatio: (itemWidth / itemHeight),
               ) ,
+              
               physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
+              shrinkWrap: false,
               children: <Widget>
               [
                 for( int i =0 ; i < length ; i ++)
@@ -89,6 +97,7 @@ class _ListItems extends State<ListItems>
                                 height: size.height *0.5,
                                 child: CardItems
                                 (
+                                  isLogin: this.widget.isLogin,
                                   key: UniqueKey(),
                                   product: foodSnap.data[i],
                                   press: press,
@@ -106,6 +115,7 @@ class _ListItems extends State<ListItems>
                       },
                       child: CardItems
                       (
+                        isLogin: this.widget.isLogin,
                         key: UniqueKey(),
                         product: foodSnap.data[i],
                         press: press,
