@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:foodshop/components/checkLogin.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/user.dart';
+import 'package:foodshop/screens/favorite/favorite_screen.dart';
 import 'package:foodshop/screens/history/history_screens.dart';
 import 'package:foodshop/user/components/userpreferences.dart';
 import 'package:foodshop/user/user_screen.dart';
@@ -100,7 +101,8 @@ class _MainScreens extends State<MainScreens>
         });
       }
       _isLoading = false;
-
+      
+      //reload widget when check login
       listScreens = 
       [
         HomeScreen
@@ -109,6 +111,11 @@ class _MainScreens extends State<MainScreens>
           isLogin : isLogin,
         ),
         HistoryScreen
+        (
+          isLogin: isLogin,
+          listUser : listUser,
+        ),
+        FavoriteScreen
         (
           isLogin: isLogin,
           listUser : listUser,
@@ -137,7 +144,7 @@ class _MainScreens extends State<MainScreens>
     _getStorage();
     _checkLogin();
     
-    // reload screens
+    // create screens
     listScreens = 
     [
       HomeScreen
@@ -146,6 +153,11 @@ class _MainScreens extends State<MainScreens>
         isLogin : isLogin,  
       ),
       HistoryScreen
+      (
+        isLogin: isLogin,
+        listUser : listUser,
+      ),
+      FavoriteScreen
       (
         isLogin: isLogin,
         listUser : listUser,
@@ -181,6 +193,7 @@ class _MainScreens extends State<MainScreens>
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[400],
         backgroundColor: kMainColor,
+        type: BottomNavigationBarType.fixed,
         currentIndex: tabIndex,
         onTap: (int index)
         {
@@ -200,6 +213,11 @@ class _MainScreens extends State<MainScreens>
           (
             icon: Icon(Icons.history),
             label: "History",
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon(Icons.favorite),
+            label: "Favorite",
           ),
           BottomNavigationBarItem
           (
