@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:foodshop/components/checkLogin.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/user.dart';
@@ -21,6 +22,13 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) 
   {
+    SystemChrome.setSystemUIOverlayStyle
+    (
+      SystemUiOverlayStyle
+      (
+        statusBarColor: kMainColor
+      )
+    );
     return MaterialApp
     (
       title: 'Flutter Demo',
