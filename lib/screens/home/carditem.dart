@@ -70,15 +70,57 @@ class _CardItems extends State<CardItems>
             Align
             (
               alignment: Alignment.center,
-              child: Text
+              child :Text
+              (
+                product.name,
+                style: TextStyle
+                (
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              )
+            ),
+            Spacer(),
+            Align
+            (
+              alignment: Alignment.center,
+              child: (!product.discount)
+              ? Text
               (
                 product.price,
                 style: TextStyle
                 (
                   color: Colors.white,
-                  fontSize: 25,
+                  fontSize: 20,
                 ),
-              ),
+              )
+              : Row
+              (
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>
+                [
+                  Text
+                  (
+                    product.price,
+                    style: TextStyle
+                    (
+                      color: Colors.white,
+                      fontSize: 15,
+                      decoration: TextDecoration.lineThrough
+                    )
+                  ),
+                  SizedBox(width: 10,),
+                  Text
+                  (
+                    ( double.parse(product.price) - double.parse(product.price) * (10/100) ).toString(),
+                    style: TextStyle
+                    (
+                      color: Colors.white,
+                      fontSize: 20,
+                    )
+                  )
+                ]
+              )
             ),
             Spacer(),
             Center

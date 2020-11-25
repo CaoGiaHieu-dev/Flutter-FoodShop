@@ -135,117 +135,241 @@ class _ListDetailProduct extends State<ListDetailProduct>
                           ),
                           Spacer(),
 
-                          //total price
-                          Align
+                          // middle conner
+                          Container
                           (
-                            alignment: Alignment.center,
-                            child: Text
+                            width: size.width *0.375,
+
+                            // name product 
+                            child : Column
                             (
-                              ( double.parse( templist[i].price ) *getItemInCart(int.parse(templist[i].id)) ).toString(),
-                              style: TextStyle
-                              (
-                                color: Colors.white
-                              ),
+                              mainAxisAlignment: MainAxisAlignment. center,
+                              children: <Widget>
+                              [
+                                Align
+                                (
+                                  alignment: Alignment.center,
+                                  child: Text
+                                  (
+                                    templist[i].name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle
+                                    (
+                                      color: Colors.white,
+                                      
+                                    ),
+                                  ),
+                                ),
+                                SizedBox
+                                (
+                                  height: 10,
+                                ),
+                                Align
+                                (
+                                  alignment: Alignment.center,
+                                  child: (!templist[i].discount)
+                                  ? Text
+                                  (
+                                    templist[i].price,
+                                    style: TextStyle
+                                    (
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                  : Row
+                                  (
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>
+                                    [
+                                      Text
+                                      (
+                                        templist[i].price,
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          decoration: TextDecoration.lineThrough
+                                        )
+                                      ),
+                                      SizedBox(width: 10,),
+                                      Text
+                                      (
+                                        ( double.parse(templist[i].price) - double.parse(templist[i].price) * (10/100) ).toString(),
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        )
+                                      )
+                                    ]
+                                  )
+                                  // child: Text
+                                  // (
+                                  //   ( double.parse( templist[i].price ) *getItemInCart(int.parse(templist[i].id)) ).toString(),
+                                  //   style: TextStyle
+                                  //   (
+                                  //     color: Colors.white
+                                  //   ),
+                                  // ),
+                                ),
+                              ],
                             ),
                           ),
                           Spacer(),
 
                           //right conner
-                          Align
+                          Container
                           (
-                            alignment: Alignment.centerRight,
-                            child: Container
+                            child: Column
                             (
-                              padding: EdgeInsets.only
-                              (
-                                left: 10,
-                                right: 10
-                              ),
-                              child: Row
-                              (
-                                children: <Widget>
-                                [
-                                  //plus
-                                  SizedBox
-                                  (
-                                    width: size.width *0.1,
-                                    child: RaisedButton
-                                    (
-                                      color: kButtonColor,
-                                      shape: RoundedRectangleBorder
-                                      (
-                                        borderRadius: BorderRadius.circular(100)
-                                      ),
-                                      onPressed: () 
-                                      {
-                                        setState(() =>
-                                        {
-                                          addtoCart(templist[i]),
-                                          presstoload()
-                                        });
-                                      },
-                                      child: Text
-                                      (
-                                        "+",
-                                        style: TextStyle
-                                        (
-                                          color: Colors.white,
-                                          fontSize: 25
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // count in cart
-                                  Container
+                              children: <Widget>
+                              [
+                                // edit number
+                                Align
+                                (
+                                  alignment: Alignment.centerRight,
+                                  child: Container
                                   (
                                     padding: EdgeInsets.only
                                     (
                                       left: 10,
                                       right: 10
                                     ),
-                                    child: Text
+                                    child: Row
                                     (
-                                      getItemInCart(int.parse(templist[i].id)).toString(),
-                                      style: TextStyle
-                                      (
-                                        color: Colors.white,
-                                        fontSize: 25
-                                      ),
+                                      children: <Widget>
+                                      [
+                                        //plus
+                                        SizedBox
+                                        (
+                                          width: size.width *0.1,
+                                          child: RaisedButton
+                                          (
+                                            color: kButtonColor,
+                                            shape: RoundedRectangleBorder
+                                            (
+                                              borderRadius: BorderRadius.circular(100)
+                                            ),
+                                            onPressed: () 
+                                            {
+                                              setState(() =>
+                                              {
+                                                addtoCart(templist[i]),
+                                                presstoload()
+                                              });
+                                            },
+                                            child: Text
+                                            (
+                                              "+",
+                                              style: TextStyle
+                                              (
+                                                color: Colors.white,
+                                                fontSize: 25
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        // total price product in cart
+                                        Container
+                                        (
+                                          padding: EdgeInsets.only
+                                          (
+                                            left: 10,
+                                            right: 10
+                                          ),
+                                          child: Text
+                                          (
+                                            getItemInCart(int.parse(templist[i].id)).toString(),
+                                            maxLines: 2,
+                                            style: TextStyle
+                                            (
+                                              color: Colors.white,
+                                              fontSize: 15
+                                            ),
+                                          ),
+                                        ),
+                                        //remove
+                                        SizedBox
+                                        (
+                                          width: size.width *0.1,
+                                          child: RaisedButton
+                                          (
+                                            color: kButtonColor,
+                                            shape: RoundedRectangleBorder
+                                            (
+                                              borderRadius: BorderRadius.circular(100)
+                                            ),
+                                            onPressed: () 
+                                            { 
+                                              setState(() =>
+                                              {
+                                                removefromcart(int.parse(templist[i].id)),
+                                                presstoload()
+                                              });
+                                            },
+                                            child: Text
+                                            (
+                                              "-",
+                                              style: TextStyle
+                                              (
+                                                color: Colors.white,
+                                                fontSize: 25
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ]
                                     ),
-                                  ),
-                                  //remove
-                                  SizedBox
+                                  )
+                                ),
+                                Align
+                                (
+                                  alignment: Alignment.center,
+                                  child: (!templist[i].discount)
+                                  ? Text
                                   (
-                                    width: size.width *0.1,
-                                    child: RaisedButton
+                                    templist[i].price,
+                                    style: TextStyle
                                     (
-                                      color: kButtonColor,
-                                      shape: RoundedRectangleBorder
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                  : Column
+                                  (
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>
+                                    [
+                                      Text
                                       (
-                                        borderRadius: BorderRadius.circular(100)
-                                      ),
-                                      onPressed: () 
-                                      { 
-                                        setState(() =>
-                                        {
-                                          removefromcart(int.parse(templist[i].id)),
-                                          presstoload()
-                                        });
-                                      },
-                                      child: Text
-                                      (
-                                        "-",
+                                        ( double.parse( templist[i].price ) *getItemInCart(int.parse(templist[i].id)) ).toString(),
                                         style: TextStyle
                                         (
                                           color: Colors.white,
-                                          fontSize: 25
-                                        ),
+                                          fontSize: 15,
+                                          decoration: TextDecoration.lineThrough
+                                        )
                                       ),
-                                    ),
-                                  ),
-                                ]
-                              ),
-                            )
+                                      SizedBox(width: 10,),
+                                      Text
+                                      (
+                                        ( (double.parse(templist[i].price) - double.parse(templist[i].price) * (10/100)) * getItemInCart(int.parse(templist[i].id)) ).toStringAsFixed(2),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.visible,
+                                        style: TextStyle
+                                        (
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),

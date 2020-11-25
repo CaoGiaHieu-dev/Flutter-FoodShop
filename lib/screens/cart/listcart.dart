@@ -65,18 +65,62 @@ class _ListCart extends State<ListCart>
                     Spacer(),
 
                     //total price
-                    Align
+                    // Align
+                    // (
+                    //   alignment: Alignment.center,
+                    //   child: Text
+                    //   (
+                    //     ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
+                    //     style: TextStyle
+                    //     (
+                    //       color: Colors.white
+                    //     ),
+                    //   ),
+                    // ),
+                     Align
                     (
                       alignment: Alignment.center,
-                      child: Text
+                      child: (!cartList[i].discount)
+                      ? Text
                       (
-                        ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
+                        cartList[i].price,
                         style: TextStyle
                         (
-                          color: Colors.white
+                          color: Colors.white,
+                          fontSize: 20,
                         ),
-                      ),
+                      )
+                      : Column
+                      (
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>
+                        [
+                          Text
+                          (
+                            ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
+                            style: TextStyle
+                            (
+                              color: Colors.white,
+                              fontSize: 15,
+                              decoration: TextDecoration.lineThrough
+                            )
+                          ),
+                          SizedBox(width: 10,),
+                          Text
+                          (
+                            ( (double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100)) * getItemInCart(int.parse(cartList[i].id)) ).toStringAsFixed(2),
+                            maxLines: 2,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle
+                            (
+                              color: Colors.white,
+                              fontSize: 20,
+                            )
+                          )
+                        ]
+                      )
                     ),
+
                     Spacer(),
 
                     //right conner

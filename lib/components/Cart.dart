@@ -72,7 +72,9 @@ double getTotalPrice()
   double total = 0;
   for(int i = 0 ; i< cartList.length ; i++)
   {
-    total += double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id));
+    double totalPrice = 0;
+    cartList[i].discount ? totalPrice = double.parse(cartList[i].price) - double.parse(cartList[i].price) *(10/100) : totalPrice = double.parse(cartList[i].price) ;
+    total += totalPrice *getItemInCart(int.parse(cartList[i].id));
   } 
   return total;
 }

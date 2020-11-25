@@ -101,7 +101,7 @@ class _Info extends State<Info>
                   (
                     _dateTime.toString(), //get time payment
                     getItemInCart(int.parse(cartList[i].id)), //count number of product in Cart 
-                    ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ),  //get total price of product 
+                    !cartList[i].discount ?  ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ) : (double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100)) * getItemInCart(int.parse(cartList[i].id)) , //get total price of product 
                     this.widget.listUser.first.id,  //get User id
                     cartList[i].id.toString(),  //get Product id
                     phoneNumber,  //get PhoneNumber on input
