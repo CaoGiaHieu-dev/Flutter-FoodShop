@@ -70,7 +70,7 @@ class _ListHistory extends State<ListHistory>
   }
   _getTotalPrice(List<dynamic> _list)
   {
-    int _totalprice = 0;
+    double _totalprice = 0;
     for ( int i =0 ; i < _list.length ; i++)
     {
       _totalprice += _list[i].total ;
