@@ -17,6 +17,7 @@ class MainDetail extends StatefulWidget
   final Future<List<Products>> listProduct;
   final List<User> listUser;
   final bool isLogin;
+  
   MainDetail
   (
     {
@@ -35,7 +36,7 @@ class _MainDetail extends State<MainDetail>
 {
 
   GlobalKey<ScaffoldState> _scaffold = GlobalKey();
-
+  String dropdownValue = 'Sort by price';
   // #region State
   void initState()
   {
@@ -135,6 +136,58 @@ class _MainDetail extends State<MainDetail>
   }
 
   // #endregion
+  
+  // #region DropDown button
+  String _value;
+  DropdownButton _itemDown() => DropdownButton<String>
+  (
+    items: 
+    [
+      DropdownMenuItem
+      (
+        value: "0",
+        child: Text
+        (
+          "Low -> High",
+          style: TextStyle
+          (
+            color: kButtonColor 
+          ),
+        ),
+      ),
+      DropdownMenuItem
+      (
+        value: "1",
+        child: Text
+        (
+          "High -> Low",
+          style: TextStyle
+          (
+            color: kButtonColor 
+          ),
+        ),
+      ),
+    ],
+    onChanged: (value) 
+    {
+      setState(() 
+      {
+        _value = value;
+      });
+    },
+    value: _value,
+    isExpanded: true,
+    hint: Text
+    (
+      "Sort by price",
+      style: TextStyle
+      (
+        color: kButtonColor 
+      ),
+    ),
+  );
+  // #endregion
+  
   @override
   Widget build(BuildContext context)
   {
@@ -174,16 +227,20 @@ class _MainDetail extends State<MainDetail>
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       color: kMainColor,
-                      child: Image.network
-                      (
-                        this.widget.banner,
-                        fit: BoxFit.fill  ,
-                      )
+                      // child: Image.network
+                      // (
+                      //   this.widget.banner,
+                      //   fit: BoxFit.fill  ,
+                      // )
+
+                      //drop down button
+                      child: _itemDown()
                     ),
                   ),
                   ListDetailProduct
                   (
                     size: size,
+                    value : _value,
                     listProduct: this.widget.listProduct,
                     searchText: _searchText,
                     presstoload : () =>

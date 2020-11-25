@@ -13,6 +13,7 @@ class ListDetailProduct extends StatefulWidget
   final Future<List<Products>> listProduct;
   final Function presstoload;
   final String searchText;
+  final String value;
   ListDetailProduct
   (
     {
@@ -20,7 +21,8 @@ class ListDetailProduct extends StatefulWidget
       this.size,
       this.listProduct,
       this.presstoload,
-      this.searchText
+      this.searchText,
+      this.value
     }
   ) : super (key : key );
   @override
@@ -35,6 +37,20 @@ class _ListDetailProduct extends State<ListDetailProduct>
   _ListDetailProduct(this.size,this.listProduct,this.presstoload);
   
   List<Products> temp = cartList;
+
+  // #region sort list
+  _sortList(List<dynamic> _list)
+  {
+    if(this.widget.value =="0")
+    {
+      _list.sort((a,b) => double.parse(a.price).compareTo(double.parse(b.price)));
+    }
+    else
+    {
+      _list.sort((a,b) => double.parse(b.price).compareTo(double.parse(a.price)));
+    }
+  }
+  // #endregion
 
   @override
   Widget build(BuildContext context)
@@ -67,6 +83,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
             {
               templist = snapshot.data;
             }
+            _sortList(templist);
             return ListView
             (
               shrinkWrap: true,
