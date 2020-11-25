@@ -1,7 +1,7 @@
 class Cart {
   String id;
   String createAt;
-  double  total;
+  int  total;
   String userId;
   String productId;
   String phonenumber;

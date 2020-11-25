@@ -229,7 +229,7 @@ class _Info extends State<Info>
                     if(text.isEmpty)
                     {
                       _validatePhoneNumber= true;
-                      phoneNumber = "";
+                      phoneNumber.isEmpty;
                     }
                     else
                     {
@@ -288,7 +288,7 @@ class _Info extends State<Info>
                   },
                 )
               ),
-              //GetGoogleMap()
+              //GetGoogleMap
               SizedBox
               (
                 height: MediaQuery.of(context).size.height *0.5 -30,
@@ -306,6 +306,7 @@ class _Info extends State<Info>
                     setState(() 
                     {
                       address = selectedPlace.formattedAddress;
+                      phoneNumber = phoneNumber;
                     });
                     
                     // setState

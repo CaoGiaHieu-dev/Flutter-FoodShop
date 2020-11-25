@@ -89,11 +89,11 @@ Future<Cart> postCart(String time ,int number ,double total ,String userId , Str
     },
     body: jsonEncode
     (
-      <Object,Object>
+      <dynamic,dynamic>
       {
         'create_at' : time,
         'number': number,
-        'total' : total,
+        'total' : int.parse(total.toStringAsFixed(0)),
         'UserId' : userId,
         'ProductId' :productId,
         'phonenumber' : phonenumber,
