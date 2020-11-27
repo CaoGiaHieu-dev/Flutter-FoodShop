@@ -1,5 +1,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
@@ -60,74 +61,105 @@ class _SwipeList extends State<SwipeList>
             {
               if(foodSnap.connectionState == ConnectionState.done && foodSnap.hasData)
               {
-                return ListView
+                return Swiper
                 (
-                  padding: EdgeInsets.only
-                  (
-                    left: 10,
-                    right: 10,
-                  ),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>
-                  [
-                    for(int i =0 ; i < foodSnap.data.length ; i++)
-                      new GestureDetector
-                      ( 
-                        onTap: () 
+
+                  pagination: new SwiperPagination(),
+                  //control: new SwiperControl(),
+                  itemCount: foodSnap.data.length,
+                  itemBuilder: (context, i) 
+                  {
+                    return GestureDetector
+                    (
+                      onTap: () 
+                      {
+                        setState(()
                         {
-                          setState(()
-                          {
-                            this.widget.presstoLoad(foodSnap.data[i].id);
-                            // detailbaner = foodSnap.data[i].image.toString() ;
-                            //  product = getProducts(foodSnap.data[i].id, "");
-                            // Navigator.pushReplacement(context, MaterialPageRoute
-                            // (
-                            //   builder: (context) =>
-                            //   HomeScreen
-                            //   ( 
-                            //     categoryId: foodSnap.data[i].id,
-                            //   )
-                            // ));
-                            // Route route = MaterialPageRoute(builder: (context) => ListItems(products: product,size: size,));
-                            // Navigator.pushReplacement(context, route);
-                          });
-                        },
-                        child : Card
-                        (
-                          shape: BeveledRectangleBorder
+                          this.widget.presstoLoad(foodSnap.data[i].id);
+                        });
+                      },
+                      child: CachedNetworkImage
+                      (
+                        // /fit: BoxFit.fill,
+                        imageUrl: foodSnap.data[i].image,
+                        alignment: Alignment.center,
+                        placeholder: (context, url) => new CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
+                        imageBuilder: (context, imageProvider) 
+                        {
+                          return Container
                           (
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: kMainColor,
-                          child: Container
-                          (
-                            width: MediaQuery.of(context).size.width - 50,
+                            margin: EdgeInsets.only
+                            (
+                              left : 10,
+                              right: 10,
+                              top: 10
+                            ),
                             decoration: BoxDecoration
                             (
-                              // image: DecorationImage
-                              // (
-                              //   image: NetworkImage(foodSnap.data[i].image.toString() ,scale: 1.0),onError: (exception, stackTrace) 
-                              //   {
-                              //     return Center(child:  CircularProgressIndicator(),);  
-                              //   },
-                              //   fit: BoxFit.fill
-                              // ),
-                              borderRadius: BorderRadius.all(Radius.circular(36))
+                              borderRadius: BorderRadius.circular(15),
+                              //shape: BoxShape.circle,
+                              image: DecorationImage
+                              (
+                                image: imageProvider,
+                                fit: BoxFit.cover
+                              )
                             ),
-                            child: CachedNetworkImage
-                            (
-                              imageUrl: foodSnap.data[i].image,
-                              width: size.width -50,
-                              alignment: Alignment.center,
-                              placeholder: (context, url) => new CircularProgressIndicator(),
-                              errorWidget: (context, url, error) => new Icon(Icons.error),
-                            ),
-                          ),
-                        )
-                      )
-                  ],
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
+              //   return ListView
+              //   (
+              //     padding: EdgeInsets.only
+              //     (
+              //       left: 10,
+              //       right: 10,
+              //     ),
+              //     shrinkWrap: true,
+              //     scrollDirection: Axis.horizontal,
+              //     children: <Widget>
+              //     [
+              //       for(int i =0 ; i < foodSnap.data.length ; i++)
+              //         new GestureDetector
+              //         ( 
+              //           onTap: () 
+              //           {
+              //             setState(()
+              //             {
+              //               this.widget.presstoLoad(foodSnap.data[i].id);
+              //             });
+              //           },
+              //           child : Card
+              //           (
+              //             shape: BeveledRectangleBorder
+              //             (
+              //               borderRadius: BorderRadius.circular(15.0),
+              //             ),
+              //             color: kMainColor,
+              //             child: Container
+              //             (
+              //               width: MediaQuery.of(context).size.width - 50,
+              //               decoration: BoxDecoration
+              //               (
+              //                 borderRadius: BorderRadius.all(Radius.circular(36))
+              //               ),
+              //               child: CachedNetworkImage
+              //               (
+              //                 imageUrl: foodSnap.data[i].image,
+              //                 width: size.width -50,
+              //                 alignment: Alignment.center,
+              //                 placeholder: (context, url) => new CircularProgressIndicator(),
+              //                 errorWidget: (context, url, error) => new Icon(Icons.error),
+              //               ),
+              //             ),
+              //           )
+              //         )
+              //     ],
+              //   );
+              // 
               }
               return Center
               (
