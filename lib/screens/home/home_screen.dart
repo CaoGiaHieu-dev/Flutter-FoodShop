@@ -248,6 +248,7 @@ class _HomeSceen extends State<HomeScreen>
                           listProducts: snapshot.data,
                           child: ListItems
                           (
+                            listUser: this.widget.listUser,
                             isLogin: this.widget.isLogin,
                             products: listproducts,
                             number: number,

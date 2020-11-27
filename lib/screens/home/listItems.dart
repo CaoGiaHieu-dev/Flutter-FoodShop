@@ -1,5 +1,6 @@
 
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/home/carditem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class ListItems extends StatefulWidget
   final Future<List<Products>> products;
   final int number;
   final bool isLogin;
+  final List<User> listUser;
   ListItems
   (
     {
@@ -20,7 +22,8 @@ class ListItems extends StatefulWidget
       this.press,
       @required this.products,
       this.number,
-      @required this.isLogin
+      @required this.isLogin,
+      @required this.listUser
     }
   ) : super ( key : key );
   
@@ -97,6 +100,7 @@ class _ListItems extends State<ListItems>
                                 height: size.height *0.5,
                                 child: CardItems
                                 (
+                                  userId: this.widget.listUser.first.id,
                                   isLogin: this.widget.isLogin,
                                   key: UniqueKey(),
                                   product: foodSnap.data[i],
@@ -115,6 +119,7 @@ class _ListItems extends State<ListItems>
                       },
                       child: CardItems
                       (
+                        userId: this.widget.listUser.first.id,
                         isLogin: this.widget.isLogin,
                         key: UniqueKey(),
                         product: foodSnap.data[i],

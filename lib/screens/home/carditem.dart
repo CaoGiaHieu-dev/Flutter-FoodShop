@@ -3,6 +3,7 @@ import 'package:foodshop/components/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodshop/models/products.dart';
+import 'package:foodshop/user/components/userpreferences.dart';
 
 import '../../components/cart.dart';
 
@@ -11,6 +12,7 @@ class CardItems extends StatefulWidget
   final bool isLogin;
   final Function press;
   final Products product;
+  final String userId;
 
   CardItems
   (
@@ -18,7 +20,8 @@ class CardItems extends StatefulWidget
       Key key,
       @required this.product,
       this.press,
-      @required  this.isLogin
+      @required this.isLogin,
+      @required this.userId ,
     }
   ) : super (key : key );
 
@@ -32,6 +35,40 @@ class _CardItems extends State<CardItems>
   Products product;
   _CardItems(this.press,this.product);
 
+  List<String> _favoriteList;
+  // #region State
+  void initState()
+  {
+    super.initState();
+    _favoriteList = UserPrefrences().getListFavorite(this.widget.userId);
+  }
+  // #endregion
+
+  // #region Favorite
+  bool _checkFavoriteList(String productId)
+  {
+    bool _check = false;
+    if(_favoriteList == null || _favoriteList.length ==0)
+    {
+      _check= false;
+    }
+    else
+    {
+      _favoriteList.forEach
+      (
+        (element) 
+        { 
+          if(element == productId)
+          {
+            _check = true;
+            
+          }
+        }
+      );
+    }
+    return _check;
+  }
+  // #endregion
   @override
   Widget build(BuildContext context )
   {
@@ -90,15 +127,33 @@ class _CardItems extends State<CardItems>
               alignment: Alignment.center,
               child: GestureDetector
               (
-                onTap: () 
+                onTap: ()
                 {
-                  
+                   setState(() 
+                   {
+                      if(_checkFavoriteList(product.id) == false)
+                      {
+                        _favoriteList.add(product.id);
+                        UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
+                      }
+                      else
+                      {
+                        _favoriteList.remove(product.id);
+                        UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
+                      }
+                   });
                 },
-                child: Icon
+                child: _checkFavoriteList(product.id) == true
+                ? Icon
                 (
                   Icons.favorite,
                   color: Colors.red
-                ),
+                )
+                : Icon
+                (
+                  Icons.favorite,
+                  color: Colors.black
+                ) 
               ),
             )
             : SizedBox() ,

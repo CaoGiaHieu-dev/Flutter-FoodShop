@@ -5,6 +5,7 @@ import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/products.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodshop/models/user.dart';
 import 'package:foodshop/screens/home/carditem.dart';
 
 class ListDetailProduct extends StatefulWidget
@@ -15,6 +16,7 @@ class ListDetailProduct extends StatefulWidget
   final String searchText;
   final String value;
   final bool isLogin;
+  final List<User> listUser;
   ListDetailProduct
   (
     {
@@ -24,7 +26,8 @@ class ListDetailProduct extends StatefulWidget
       this.presstoload,
       this.searchText,
       this.value,
-      @required this.isLogin
+      @required this.isLogin,
+      @required this.listUser,
     }
   ) : super (key : key );
   @override
@@ -110,6 +113,7 @@ class _ListDetailProduct extends State<ListDetailProduct>
                               height: size.height *0.5,
                               child: CardItems
                               (
+                                userId : this.widget.listUser.first.id,
                                 isLogin: this.widget.isLogin,
                                 key: UniqueKey(),
                                 product: templist[i],

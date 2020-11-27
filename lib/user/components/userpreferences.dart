@@ -28,6 +28,11 @@ class UserPrefrences
   {
     return _preferences.getString("password") ?? "";
   }
+
+  List<String> getListFavorite(String userId)
+  {
+    return _preferences.getStringList(userId);
+  }
   // #endregion
 
   //#region Set Data
@@ -39,6 +44,11 @@ class UserPrefrences
   Future setPassword (String password) async
   {
      await _preferences.setString('password',password) ;
+  }
+
+  Future setListFavorite (String userId , List<String> list) async
+  {
+     await _preferences.setStringList(userId,list) ;
   }
   //#endregion
 }

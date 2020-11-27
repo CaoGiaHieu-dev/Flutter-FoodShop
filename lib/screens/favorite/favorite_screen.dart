@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/user.dart';
-import 'package:foodshop/screens/history/listhistory.dart';
+import 'package:foodshop/screens/favorite/favoriteList.dart';
 
 import '../header.dart';
 
@@ -69,7 +69,7 @@ class _FavoriteScreen extends State<FavoriteScreen>
                     ),
                   ),
                   this.widget.isLogin == true
-                  ? ListHistory
+                  ? ListFavorite
                   (
                     size: size,
                     userId : this.widget.listUser.first.id,

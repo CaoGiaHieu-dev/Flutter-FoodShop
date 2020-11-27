@@ -239,6 +239,7 @@ class _MainDetail extends State<MainDetail>
                   ),
                   ListDetailProduct
                   (
+                    listUser: this.widget.listUser,
                     isLogin: this.widget.isLogin,
                     size: size,
                     value : _value,
