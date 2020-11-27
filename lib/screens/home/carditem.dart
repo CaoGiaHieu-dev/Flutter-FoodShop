@@ -96,7 +96,23 @@ class _CardItems extends State<CardItems>
         (
           children: <Widget>
           [
-            CachedNetworkImage
+            product.hot
+            ? Banner
+            (
+              message: "HOT",
+              color: Colors.red,
+              location: BannerLocation.topEnd,
+              child: CachedNetworkImage
+              (
+                imageUrl: product.image.toString(),
+                width: MediaQuery.of(context).size.width -20,
+                height: MediaQuery.of(context).size.height * 0.25 - 100,
+                alignment: Alignment.center,
+                placeholder: (context, url) => new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
+              ),
+            )
+            : CachedNetworkImage
             (
               imageUrl: product.image.toString(),
               width: MediaQuery.of(context).size.width -20,

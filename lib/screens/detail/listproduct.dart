@@ -151,12 +151,37 @@ class _ListDetailProduct extends State<ListDetailProduct>
                           //   height: 120 ,
                           //   width: 100,
                           // ),
-                          CachedNetworkImage
+                          templist[i].hot
+                          ? Banner
                           (
-                            imageUrl: templist[i].image,
+                            message: "HOT",
+                            color: Colors.red,
+                            location: BannerLocation.topEnd,
+                            child: CachedNetworkImage
+                            (
+                              imageUrl: templist[i].image.toString(),
+                              height: 120,
+                              width: 100,
+                              alignment: Alignment.center,
+                              placeholder: (context, url) => new CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => new Icon(Icons.error),
+                            ),
+                          )
+                          : CachedNetworkImage
+                          (
+                            imageUrl: templist[i].image.toString(),
                             height: 120,
                             width: 100,
+                            alignment: Alignment.center,
+                            placeholder: (context, url) => new CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => new Icon(Icons.error),
                           ),
+                          // CachedNetworkImage
+                          // (
+                          //   imageUrl: templist[i].image,
+                          //   height: 120,
+                          //   width: 100,
+                          // ),
                           Spacer(),
 
                           // middle conner

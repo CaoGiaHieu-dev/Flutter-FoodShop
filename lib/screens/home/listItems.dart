@@ -47,26 +47,41 @@ class _ListItems extends State<ListItems>
   @override
   Widget build(BuildContext context)
   {
-    var size = MediaQuery.of(context).size;
+    //var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 200) / 2;
     final double itemWidth = size.width / 2;
     return Container
     (
-      height: size.height ,  
+      height: size.height +50,  
       child:  FutureBuilder
       (
         future: this.widget.products,
-        builder: (context , foodSnap)
+        builder: (context , AsyncSnapshot<List<Products>> foodSnap)
         {
           if(foodSnap.hasData && foodSnap.connectionState == ConnectionState.done)
           {
-            if( foodSnap.data.length > 6)
+            List<Products> _tempListProduct = foodSnap.data.where
+            (
+              (element) =>
+              
+                element.hot ==true
+              
+            ).toList();
+            // if( foodSnap.data.length > 6)
+            // {
+            //   length = 6;
+            // }
+            // else
+            // {
+            //   length = foodSnap.data.length;
+            // }
+            if( _tempListProduct.length > 6)
             {
               length = 6;
             }
             else
             {
-              length = foodSnap.data.length;
+              length = _tempListProduct.length;
             }
             return GridView
             (
@@ -102,7 +117,7 @@ class _ListItems extends State<ListItems>
                                   userId: this.widget.listUser.isNotEmpty ? this.widget.listUser.first.id  : "",
                                   isLogin: this.widget.isLogin,
                                   key: UniqueKey(),
-                                  product: foodSnap.data[i],
+                                  product: _tempListProduct[i],
                                   press: press,
                                 ),
                               ),
@@ -121,7 +136,7 @@ class _ListItems extends State<ListItems>
                         userId: this.widget.listUser.isNotEmpty ? this.widget.listUser.first.id :"",
                         isLogin: this.widget.isLogin,
                         key: UniqueKey(),
-                        product: foodSnap.data[i],
+                        product: _tempListProduct[i],
                         press: press,
                       ),
                     )
