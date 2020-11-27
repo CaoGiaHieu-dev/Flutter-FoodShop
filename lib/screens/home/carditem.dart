@@ -37,10 +37,15 @@ class _CardItems extends State<CardItems>
 
   List<String> _favoriteList;
   // #region State
+
+  @override
   void initState()
   {
     super.initState();
-    _favoriteList = UserPrefrences().getListFavorite(this.widget.userId);
+    if(this.widget.isLogin)
+    {
+      _favoriteList = UserPrefrences().getListFavorite(this.widget.userId); 
+    }
   }
   // #endregion
 
@@ -129,19 +134,23 @@ class _CardItems extends State<CardItems>
               (
                 onTap: ()
                 {
-                   setState(() 
-                   {
-                      if(_checkFavoriteList(product.id) == false)
-                      {
-                        _favoriteList.add(product.id);
-                        UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
-                      }
-                      else
-                      {
-                        _favoriteList.remove(product.id);
-                        UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
-                      }
-                   });
+                  if(_favoriteList== null || _favoriteList.isEmpty)
+                  {
+                    _favoriteList =[];
+                  }
+                  setState(() 
+                  {
+                    if(_checkFavoriteList(product.id) == false)
+                    {
+                      _favoriteList.add(product.id);
+                      UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
+                    }
+                    else
+                    {
+                      _favoriteList.remove(product.id);
+                      UserPrefrences().setListFavorite(this.widget.userId, _favoriteList);
+                    }
+                  });
                 },
                 child: _checkFavoriteList(product.id) == true
                 ? Icon

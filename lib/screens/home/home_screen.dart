@@ -66,16 +66,7 @@ class _HomeSceen extends State<HomeScreen>
 //   }
   // #endregion
   // #region StateFAB
-  // #region getBaner
-  String _detailbaner()
-  {
-    if ( detailbaner == "")
-    {
-      listcategories.then((value) => detailbaner = value.where((element) => element.id == "1").first.image);
-    }
-    return detailbaner;
-  }
-  // #endregion
+ 
   Widget fab = FloatingActionButton.extended
   (
     //key: UniqueKey(),
@@ -147,6 +138,16 @@ class _HomeSceen extends State<HomeScreen>
   }
   // #endregion 
   // #region State
+  // #region getBaner
+  String _detailbaner()
+  {
+    if ( detailbaner == "")
+    {
+      listcategories.then((value) => detailbaner = value.where((element) => element.id == "1").first.image);
+    }
+    return detailbaner;
+  }
+  // #endregion
   @override
   void initState()
   {

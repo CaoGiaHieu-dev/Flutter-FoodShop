@@ -55,8 +55,7 @@ class _ListItems extends State<ListItems>
       height: size.height ,  
       child:  FutureBuilder
       (
-        initialData: [],
-        future: products,
+        future: this.widget.products,
         builder: (context , foodSnap)
         {
           if(foodSnap.hasData && foodSnap.connectionState == ConnectionState.done)
@@ -75,7 +74,7 @@ class _ListItems extends State<ListItems>
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
               (
                 crossAxisCount: 2,
-                 childAspectRatio: (itemWidth / itemHeight),
+                childAspectRatio: (itemWidth / itemHeight),
               ) ,
               
               physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +99,7 @@ class _ListItems extends State<ListItems>
                                 height: size.height *0.5,
                                 child: CardItems
                                 (
-                                  userId: this.widget.listUser.first.id,
+                                  userId: this.widget.listUser.isNotEmpty ? this.widget.listUser.first.id  : "",
                                   isLogin: this.widget.isLogin,
                                   key: UniqueKey(),
                                   product: foodSnap.data[i],
@@ -119,7 +118,7 @@ class _ListItems extends State<ListItems>
                       },
                       child: CardItems
                       (
-                        userId: this.widget.listUser.first.id,
+                        userId: this.widget.listUser.isNotEmpty ? this.widget.listUser.first.id :"",
                         isLogin: this.widget.isLogin,
                         key: UniqueKey(),
                         product: foodSnap.data[i],

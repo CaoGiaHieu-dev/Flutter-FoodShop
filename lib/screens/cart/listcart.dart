@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/components/cart.dart';
 import 'package:foodshop/models/products.dart';
@@ -56,12 +57,19 @@ class _ListCart extends State<ListCart>
                   children: <Widget>
                   [
                     //image
-                    Image.network
+                    CachedNetworkImage
                     (
-                      cartList[i].image,
+                      imageUrl: cartList[i].image,
                       height: 120 ,
                       width: 100,
+                      
                     ),
+                    // Image.network
+                    // (
+                    //   cartList[i].image,
+                    //   height: 120 ,
+                    //   width: 100,
+                    // ),
                     Spacer(),
 
                     //total price
