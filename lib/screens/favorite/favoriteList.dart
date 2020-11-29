@@ -40,10 +40,22 @@ class _ListFavorite extends State<ListFavorite>
     isLoading=true;
     super.initState();
     _favoriteList = UserPrefrences().getListFavorite(this.widget.userId);
-    _getProducts().whenComplete(() => 
+    _getProducts().whenComplete(() 
     {
-      isLoading = false
+      if(mounted)
+      {
+        setState(() 
+        {
+          isLoading = false;
+        });
+      }
     });
+  }
+
+  @override
+  void dispose()
+  {
+    super.dispose();
   }
   // #endregion
   // #region GetProductDetail
@@ -52,33 +64,29 @@ class _ListFavorite extends State<ListFavorite>
 
   Future _getProducts() async
   {
-     _tempProduct =[];
+    _tempProduct =[];
     _tempCategory = await getCategories();
-    List<Products> _tempList;
     for(var items in _tempCategory)
     {
-      _tempList = await getProducts(items.id, "");
-      _tempList.forEach
-      (
-        (element) 
-        { 
-          _favoriteList.isEmpty
-          ?? _favoriteList.forEach
-          (
-            (fe) 
-            { 
-              if( element.id == fe)
-              {
-                setState(() 
+      await getProducts(items.id, "").then((value) => 
+      {
+        value.forEach
+        (
+          (element) 
+          { 
+            _favoriteList.forEach
+            (
+              (fe) 
+              { 
+                if( element.id == fe)
                 {
                   _tempProduct.add(element);
-                });
+                }
               }
-            }
-          );
-        }
-      );
-
+            );
+          }
+        )
+      });
     }
   }
   // #endregion
@@ -90,10 +98,11 @@ class _ListFavorite extends State<ListFavorite>
     (
       height: this.widget.size.height *0.6 ,
       
-      child : _favoriteList == null
+      child : _favoriteList == null || _favoriteList.length == 0
       ? Text("it's empty")
       : isLoading
-      ?? ListView.builder
+      ? Center(child: CircularProgressIndicator())
+      : ListView.builder
       (
         itemCount: _tempProduct.length,
         itemBuilder: (context, i) 
