@@ -46,8 +46,16 @@ class _PopUpHistory extends State<PopUpHistory>
   void initState()
   {
     super.initState();
-    _getProducts();
+    if(mounted)
+    {
+      _getProducts();
+    }
     //_getData();
+  }
+  @override
+  void dispose()
+  {
+    super.dispose();
   }
 
   // #endregion
@@ -67,10 +75,13 @@ class _PopUpHistory extends State<PopUpHistory>
       (
         (element) 
         { 
-          setState(() =>
+          if(mounted)
           {
-            _tempProduct.add(element)
-          });
+            setState(() =>
+            {
+              _tempProduct.add(element)
+            });
+          }
         }
       );
     }

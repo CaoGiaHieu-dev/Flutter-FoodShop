@@ -1,7 +1,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:foodshop/components/constants.dart';
 import 'package:foodshop/models/category.dart';
 import 'package:foodshop/models/products.dart';
 import 'package:flutter/cupertino.dart';

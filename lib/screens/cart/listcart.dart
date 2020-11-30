@@ -57,79 +57,145 @@ class _ListCart extends State<ListCart>
                   children: <Widget>
                   [
                     //image
-                    CachedNetworkImage
+                    cartList[i].hot
+                    ? Banner
                     (
-                      imageUrl: cartList[i].image,
-                      height: 120 ,
+                      message: "HOT",
+                      color: Colors.red,
+                      location: BannerLocation.topEnd,
+                      child: CachedNetworkImage
+                      (
+                        imageUrl: cartList[i].image.toString(),
+                        height: 120,
+                        width: 100,
+                        alignment: Alignment.center,
+                        placeholder: (context, url) => new CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
+                      ),
+                    )
+                    : CachedNetworkImage
+                    (
+                      imageUrl: cartList[i].image.toString(),
+                      height: 120,
                       width: 100,
-                      
+                      alignment: Alignment.center,
+                      placeholder: (context, url) => new CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => new Icon(Icons.error),
                     ),
-                    // Image.network
-                    // (
-                    //   cartList[i].image,
-                    //   height: 120 ,
-                    //   width: 100,
-                    // ),
                     Spacer(),
 
-                    //total price
-                    // Align
-                    // (
-                    //   alignment: Alignment.center,
-                    //   child: Text
-                    //   (
-                    //     ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
-                    //     style: TextStyle
-                    //     (
-                    //       color: Colors.white
-                    //     ),
-                    //   ),
-                    // ),
-                     Align
+                    // middle conner
+                    Container
                     (
-                      alignment: Alignment.center,
-                      child: (!cartList[i].discount)
-                      ? Text
+                      width: this.widget.size.width *0.375,
+
+                      // name product 
+                      child : Column
                       (
-                        cartList[i].price,
-                        style: TextStyle
-                        (
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      )
-                      : Column
-                      (
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment. center,
                         children: <Widget>
                         [
-                          Text
+                          Align
                           (
-                            ( double.parse( cartList[i].price ) *getItemInCart(int.parse(cartList[i].id)) ).toString(),
-                            style: TextStyle
+                            alignment: Alignment.center,
+                            child: Text
                             (
-                              color: Colors.white,
-                              fontSize: 15,
-                              decoration: TextDecoration.lineThrough
-                            )
+                              cartList[i].name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              textAlign: TextAlign.center,
+                              style: TextStyle
+                              (
+                                color: Colors.white,
+                                
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 10,),
-                          Text
+                          SizedBox
                           (
-                            ( (double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100)) * getItemInCart(int.parse(cartList[i].id)) ).toStringAsFixed(2),
-                            maxLines: 2,
-                            overflow: TextOverflow.visible,
-                            style: TextStyle
+                            height: 10,
+                          ),
+                          Align
+                          (
+                            alignment: Alignment.center,
+                            child: (!cartList[i].discount)
+                            ? Text
                             (
-                              color: Colors.white,
-                              fontSize: 20,
+                              cartList[i].price,
+                              style: TextStyle
+                              (
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
                             )
-                          )
-                        ]
-                      )
+                            : Row
+                            (
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>
+                              [
+                                Text
+                                (
+                                  cartList[i].price,
+                                  style: TextStyle
+                                  (
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    decoration: TextDecoration.lineThrough
+                                  )
+                                ),
+                                SizedBox(width: 10,),
+                                Text
+                                (
+                                  ( double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100) ).toStringAsFixed(2),
+                                  style: TextStyle
+                                  (
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  )
+                                )
+                              ]
+                            )
+                            // child: Text
+                            // (
+                            //   ( double.parse( templist[i].price ) *getItemInCart(int.parse(templist[i].id)) ).toString(),
+                            //   style: TextStyle
+                            //   (
+                            //     color: Colors.white
+                            //   ),
+                            // ),
+                          ),
+                        ],
+                      ),
                     ),
-
                     Spacer(),
+//                     //total price
+//                     Align
+//                     (
+//                       alignment: Alignment.center,
+//                       child: (cartList[i].discount)
+//                       ? Text
+//                       (
+//                         ( (double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100)) * getItemInCart(int.parse(cartList[i].id)) ).toStringAsFixed(2),
+//                         maxLines: 2,
+//                         overflow: TextOverflow.visible,
+//                         style: TextStyle
+//                         (
+//                           color: Colors.white,
+//                           fontSize: 20,
+//                         )
+//                       ) 
+//                       : Text
+//                       (
+//                         ( double.parse( cartList[i].price ) * getItemInCart(int.parse(cartList[i].id)) ).toString(),
+//                         style: TextStyle
+//                         (
+//                           color: Colors.white,
+//                           fontSize: 20,
+//                         )
+//                       )
+//                     ),
+// 
+//                     Spacer(),
 
                     //right conner
                     Align
@@ -142,87 +208,118 @@ class _ListCart extends State<ListCart>
                           left: 10,
                           right: 10
                         ),
-                        child: Row
+                        child: Column
                         (
                           children: <Widget>
                           [
-                            //plus
-                            SizedBox
+                            Row
                             (
-                              width: size.width *0.1,
-                              child: RaisedButton
-                              (
-                                color: kButtonColor,
-                                shape: RoundedRectangleBorder
+                              children: <Widget>
+                              [
+                                //plus
+                                SizedBox
                                 (
-                                  borderRadius: BorderRadius.circular(100)
-                                ),
-                                onPressed: () 
-                                {
-                                  setState(() =>
-                                  {
-                                    addtoCart(cartList[i]),
-                                    updateTotalPrice()
-                                  });
-                                },
-                                child: Text
-                                (
-                                  "+",
-                                  style: TextStyle
+                                  width: size.width *0.1,
+                                  child: RaisedButton
                                   (
-                                    color: Colors.white,
-                                    fontSize: 25
+                                    color: kButtonColor,
+                                    shape: RoundedRectangleBorder
+                                    (
+                                      borderRadius: BorderRadius.circular(100)
+                                    ),
+                                    onPressed: () 
+                                    {
+                                      setState(() =>
+                                      {
+                                        addtoCart(cartList[i]),
+                                        updateTotalPrice()
+                                      });
+                                    },
+                                    child: Text
+                                    (
+                                      "+",
+                                      style: TextStyle
+                                      (
+                                        color: Colors.white,
+                                        fontSize: 25
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                // count in cart
+                                Container
+                                (
+                                  padding: EdgeInsets.only
+                                  (
+                                    left: 10,
+                                    right: 10
+                                  ),
+                                  child: Text
+                                  (
+                                    getItemInCart(int.parse(cartList[i].id)).toString(),
+                                    style: TextStyle
+                                    (
+                                      color: Colors.white,
+                                      fontSize: 25
+                                    ),
+                                  ),
+                                ),
+                                //remove
+                                SizedBox
+                                (
+                                  width: size.width *0.1,
+                                  child: RaisedButton
+                                  (
+                                    color: kButtonColor,
+                                    shape: RoundedRectangleBorder
+                                    (
+                                      borderRadius: BorderRadius.circular(100)
+                                    ),
+                                    onPressed: () 
+                                    { 
+                                      setState(() =>
+                                      {
+                                        removefromcart(int.parse(cartList[i].id)),
+                                        updateTotalPrice()
+                                      });
+                                    },
+                                    child: Text
+                                    (
+                                      "-",
+                                      style: TextStyle
+                                      (
+                                        color: Colors.white,
+                                        fontSize: 25
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            // count in cart
-                            Container
+                            Align
                             (
-                              padding: EdgeInsets.only
+                              alignment: Alignment.center,
+                              child: (cartList[i].discount)
+                              ? Text
                               (
-                                left: 10,
-                                right: 10
-                              ),
-                              child: Text
-                              (
-                                getItemInCart(int.parse(cartList[i].id)).toString(),
+                                ( (double.parse(cartList[i].price) - double.parse(cartList[i].price) * (10/100)) * getItemInCart(int.parse(cartList[i].id)) ).toStringAsFixed(2),
+                                maxLines: 2,
+                                overflow: TextOverflow.visible,
                                 style: TextStyle
                                 (
                                   color: Colors.white,
-                                  fontSize: 25
-                                ),
-                              ),
-                            ),
-                            //remove
-                            SizedBox
-                            (
-                              width: size.width *0.1,
-                              child: RaisedButton
+                                  fontSize: 20,
+                                )
+                              ) 
+                              : Text
                               (
-                                color: kButtonColor,
-                                shape: RoundedRectangleBorder
+                                ( double.parse( cartList[i].price ) * getItemInCart(int.parse(cartList[i].id)) ).toString(),
+                                style: TextStyle
                                 (
-                                  borderRadius: BorderRadius.circular(100)
-                                ),
-                                onPressed: () 
-                                { 
-                                  setState(() =>
-                                  {
-                                    removefromcart(int.parse(cartList[i].id)),
-                                    updateTotalPrice()
-                                  });
-                                },
-                                child: Text
-                                (
-                                  "-",
-                                  style: TextStyle
-                                  (
-                                    color: Colors.white,
-                                    fontSize: 25
-                                  ),
-                                ),
-                              ),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                )
+                              )
                             ),
                           ]
                         ),

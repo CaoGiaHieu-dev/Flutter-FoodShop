@@ -65,8 +65,11 @@ class _Info extends State<Info>
       {
         setState(() =>
         {
-          _currentPosition = position,
-          _isLoading = false
+          if(mounted)
+          {
+            _currentPosition = position,
+            _isLoading = false
+          }
         });
       }
     ).catchError((e) 

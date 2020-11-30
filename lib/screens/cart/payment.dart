@@ -167,7 +167,9 @@ class _Payment extends State<Payment>
                 alignment: Alignment.center,
                 child : Text
                 (
-                  "Total : " + getTotalPrice().toString(),
+                  "Total : " + getTotalPrice().toStringAsFixed(2),
+                  maxLines: 2,
+                  overflow: TextOverflow.visible,
                   style: TextStyle
                   (
                     color: HexColor("##F9DC5C"),

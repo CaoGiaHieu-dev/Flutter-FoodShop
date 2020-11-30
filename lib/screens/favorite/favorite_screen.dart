@@ -164,7 +164,10 @@ class _FavoriteScreen extends State<FavoriteScreen>
                   this.widget.isLogin == true
                   ? ListFavorite
                   (
-                    presstoload: () =>_fabChange(),
+                    presstoload: () =>
+                    {
+                      _fabChange()
+                    },
                     size: size,
                     userId : this.widget.listUser.first.id,
                   )

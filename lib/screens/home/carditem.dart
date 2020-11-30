@@ -214,7 +214,7 @@ class _CardItems extends State<CardItems>
                   SizedBox(width: 10,),
                   Text
                   (
-                    ( double.parse(product.price) - double.parse(product.price) * (10/100) ).toString(),
+                    ( double.parse(product.price) - double.parse(product.price) * (10/100) ).toStringAsFixed(2),
                     style: TextStyle
                     (
                       color: Colors.white,

@@ -125,11 +125,30 @@ class _ListFavorite extends State<ListFavorite>
                 //   height: 120 ,
                 //   width: 100,
                 // ),
-                CachedNetworkImage
+                _tempProduct[i].hot
+                ? Banner
                 (
-                  imageUrl: _tempProduct[i].image,
+                  message: "HOT",
+                  color: Colors.red,
+                  location: BannerLocation.topEnd,
+                  child: CachedNetworkImage
+                  (
+                    imageUrl: _tempProduct[i].image.toString(),
+                    height: 120,
+                    width: 100,
+                    alignment: Alignment.center,
+                    placeholder: (context, url) => new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
+                  ),
+                )
+                : CachedNetworkImage
+                (
+                  imageUrl: _tempProduct[i].image.toString(),
                   height: 120,
                   width: 100,
+                  alignment: Alignment.center,
+                  placeholder: (context, url) => new CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
                 ),
                 Spacer(),
 
@@ -195,7 +214,7 @@ class _ListFavorite extends State<ListFavorite>
                             SizedBox(width: 10,),
                             Text
                             (
-                              ( double.parse(_tempProduct[i].price) - double.parse(_tempProduct[i].price) * (10/100) ).toString(),
+                              ( double.parse(_tempProduct[i].price) - double.parse(_tempProduct[i].price) * (10/100) ).toStringAsFixed(2),
                               style: TextStyle
                               (
                                 color: Colors.white,
@@ -253,10 +272,10 @@ class _ListFavorite extends State<ListFavorite>
                                   ),
                                   onPressed: () 
                                   {
-                                    setState(() =>
+                                    setState(() 
                                     {
-                                      addtoCart(_tempProduct[i]),
-                                      this.widget.presstoload()
+                                      addtoCart(_tempProduct[i]);
+                                      this.widget.presstoload();
                                     });
                                   },
                                   child: Text
@@ -326,44 +345,26 @@ class _ListFavorite extends State<ListFavorite>
                       Align
                       (
                         alignment: Alignment.center,
-                        child: (!_tempProduct[i].discount)
+                        child: (_tempProduct[i].discount)
                         ? Text
                         (
-                          _tempProduct[i].price,
+                          ( (double.parse(_tempProduct[i].price) - double.parse(_tempProduct[i].price) * (10/100)) * getItemInCart(int.parse(_tempProduct[i].id)) ).toStringAsFixed(2),
+                          maxLines: 2,
+                          overflow: TextOverflow.visible,
                           style: TextStyle
                           (
                             color: Colors.white,
                             fontSize: 20,
-                          ),
-                        )
-                        : Column
+                          )
+                        ) 
+                        : Text
                         (
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>
-                          [
-                            Text
-                            (
-                              ( double.parse( _tempProduct[i].price ) *getItemInCart(int.parse(_tempProduct[i].id)) ).toString(),
-                              style: TextStyle
-                              (
-                                color: Colors.white,
-                                fontSize: 15,
-                                decoration: TextDecoration.lineThrough
-                              )
-                            ),
-                            SizedBox(width: 10,),
-                            Text
-                            (
-                              ( (double.parse(_tempProduct[i].price) - double.parse(_tempProduct[i].price) * (10/100)) * getItemInCart(int.parse(_tempProduct[i].id)) ).toStringAsFixed(2),
-                              maxLines: 2,
-                              overflow: TextOverflow.visible,
-                              style: TextStyle
-                              (
-                                color: Colors.white,
-                                fontSize: 20,
-                              )
-                            )
-                          ]
+                          ( double.parse( _tempProduct[i].price ) * getItemInCart(int.parse(_tempProduct[i].id)) ).toString(),
+                          style: TextStyle
+                          (
+                            color: Colors.white,
+                            fontSize: 20,
+                          )
                         )
                       ),
                     ],

@@ -59,7 +59,7 @@ class _ListHistory extends State<ListHistory>
   // #endregion
   
   // #region get data
-  _getTotalnumber(List<dynamic> _list)
+  int _getTotalnumber(List<dynamic> _list)
   {
     int _totalnumber = 0;
     for ( int i =0 ; i < _list.length ; i++)
@@ -68,7 +68,7 @@ class _ListHistory extends State<ListHistory>
     }
     return _totalnumber;
   }
-  _getTotalPrice(List<dynamic> _list)
+  double _getTotalPrice(List<dynamic> _list)
   {
     double _totalprice = 0;
     for ( int i =0 ; i < _list.length ; i++)
@@ -142,15 +142,6 @@ class _ListHistory extends State<ListHistory>
                                 address : _group.values.where((element) => element.first.createAt == items).first[0].address
                               );
                             }
-                          ).then
-                          (
-                            (value) 
-                            {
-                              setState(() =>
-                              {
-                                
-                              });
-                            }
                           );
                         },
                         child: Card
@@ -223,7 +214,9 @@ class _ListHistory extends State<ListHistory>
                                           ),
                                           Text
                                           (
-                                            "Total Price : ${_getTotalPrice(_group.values.where((element) => element.first.createAt == items).first)}", // get total price
+                                            "Total Price : ${_getTotalPrice(_group.values.where((element) => element.first.createAt == items).first).toStringAsFixed(2)}", // get total price
+                                            maxLines: 2,
+                                            overflow: TextOverflow.visible,
                                             style: TextStyle
                                             (
                                               color: Colors.white
